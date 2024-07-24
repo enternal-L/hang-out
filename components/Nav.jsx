@@ -1,9 +1,10 @@
 "use client"
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const Nav = () => {
   return (
-    <div>Hangout!</div>
+    <Link href="/" className=''>hangout!</Link>
   )
 }
 

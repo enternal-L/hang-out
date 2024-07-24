@@ -6,7 +6,6 @@ const layout = ({ children }) => {
     <html lang = "en">
         <body>
             <div>
-                <Nav />
                 {children}
             </div>
         </body>
