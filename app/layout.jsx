@@ -6,7 +6,6 @@ const layout = ({ children }) => {
     <html lang = "en">
         <body>
             <main className='app w-full h-full'>
-
                 {children}
             </main>
         </body>

@@ -26,8 +26,8 @@
   @apply relative z-10 flex items-center flex-col mx-auto;
 }
 
-.black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+.blue_btn {
+  @apply rounded-full border-2 border-[#90A6EB] bg-white py-1.5 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white text-center text-base font-semibold font-inter flex items-center justify-center;
 }
 
 .outline_btn {
@@ -81,7 +81,7 @@
 }
 
 .form_input {
-  @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex font-semibold rounded-md border-[2px] border-[#90A6EB] mt-2 p-3 text-lg text-[#90A6EB];
 }
 
 /* Nav Component */
@@ -124,4 +124,9 @@
 
 .custom_color{
   background-color: #90A6EB;
+}
+
+.login_container{
+  padding: 0 36%;
+  min-width: 480px;
 }
