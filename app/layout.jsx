@@ -1,13 +1,14 @@
-import Nav from "@components/Nav"
+import Nav from '@components/Nav';
 import '@styles/globals.css';
 
 const layout = ({ children }) => {
   return (
     <html lang = "en">
         <body>
-            <div>
+            <main className='app w-full h-full'>
+
                 {children}
-            </div>
+            </main>
         </body>
     </html>
   )
