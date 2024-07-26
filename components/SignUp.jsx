@@ -1,18 +1,18 @@
 "use client"
 
-import Link from "next/link";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useState } from 'react'
 import { useRouter } from "next/navigation";
 
-const SignIn = () => {
+const SignUp = () => {
   
+  //Sign-up part
   const router = useRouter();
   const [username, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleSubmit = async(e) => {
+  const handleSignUp = async(e) => {
     e.preventDefault();
 
     if(!username || !password){
@@ -56,7 +56,32 @@ const SignIn = () => {
         console.log('Error during signin: ', error);
     }
   }
-  
+
+  //sign-in part
+  const handleSignIn = async(e) => {
+      e.preventDefault();
+
+      try{
+
+        console.log("ran");
+
+        const res = await signIn('credentials', {
+            username, password,
+        })
+
+        if(res.error){
+          alert("Invalid Credentials")
+          return;
+        }
+
+        if(res.ok){
+          router.push("/Home");
+        }
+
+      } catch (error){
+          console.log("Error Occured", error)
+      }
+  }
   
   return (
     <div className="w-full h-full flex-center flex-col custom_color">
@@ -80,13 +105,19 @@ const SignIn = () => {
                   required
                   className='form_input outline-none'
           />
-          <button type = "submit" onClick={handleSubmit} className="blue_btn text-base mt-4">
-              Sign In
-          </button>
+
+          <div className="w-full flex flex-row flex-center gap-3">
+                <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full">
+                    Sign In
+                </button>
+                <button type = "submit" onClick={handleSignUp} className="blue_btn text-base mt-4 w-full">
+                    Sign Up
+                </button>
+          </div>
         </nav>
       </div>
     </div>
   )
 }
 
-export default SignIn
+export default SignUp

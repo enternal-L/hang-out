@@ -1,12 +1,13 @@
 import Nav from '@components/Nav';
 import '@styles/globals.css';
+import { AuthProvider } from './Providers';
 
 const layout = ({ children }) => {
   return (
     <html lang = "en">
         <body>
             <main className='app w-full h-full'>
-                {children}
+                <AuthProvider>{children}</AuthProvider>
             </main>
         </body>
     </html>
