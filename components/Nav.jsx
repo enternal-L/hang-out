@@ -7,7 +7,7 @@ const Nav = () => {
   return (
     <nav className='flex-between w-full py-5 px-20 bg-white'>
       <Link href="/Home" className='flex flex-center'>
-        <Image src = "/logo.svg"
+        <Image src = "/logo-black.svg"
                   width = {200} 
                   height = {200}
                   className="object-contain"/>
