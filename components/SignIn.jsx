@@ -21,6 +21,21 @@ const SignIn = () => {
     }
 
     try{
+
+      const resUE = await fetch('api/register', {
+        method: 'POST',
+        body: JSON.stringify({
+            username
+        })
+      });
+
+      const { user } = await resUE.json();
+
+      if(user){
+        alert("User already Exists");
+        return;
+      }
+
       const res = await fetch('api/register', {
         method: 'POST',
         body: JSON.stringify({
