@@ -6,6 +6,9 @@ const Form = ({ post, setPost, submitting, handleSubmit}) => {
             <label>
               <textarea 
                 value={post.prompt}
+
+                /////
+
                 onChange={(e) => setPost({...post, prompt: e.target.value})}
                 placeholder='Subject'
                 required
