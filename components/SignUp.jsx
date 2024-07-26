@@ -40,7 +40,7 @@ const SignUp = () => {
         method: 'POST',
         body: JSON.stringify({
             username,
-            password
+            password,
         })
       });
 
@@ -61,22 +61,23 @@ const SignUp = () => {
   const handleSignIn = async(e) => {
       e.preventDefault();
 
+      if(!username || !password){
+          alert("Both fields are required");
+          return;
+      }
+
       try{
-
-        console.log("ran");
-
         const res = await signIn('credentials', {
             username, password,
+            redirect: false
         })
 
         if(res.error){
-          alert("Invalid Credentials")
+          alert("Your username or password may be incorrect")
           return;
         }
 
-        if(res.ok){
-          router.push("/Home");
-        }
+        router.replace("Home");
 
       } catch (error){
           console.log("Error Occured", error)

@@ -10,10 +10,10 @@ const authOptions = {
             async authorize(credentials) {
                 const user = { id: "1" }
                 return user;
-        }
-
-    })
+            }
+        })
     ],
+    
     session: {
         strategy: "jwt",
     },
@@ -23,8 +23,6 @@ const authOptions = {
         signIn:"/"
     }
 };
-
-console.log("ran");
 
 const handler = NextAuth(authOptions);
 
