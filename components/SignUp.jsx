@@ -22,8 +22,11 @@ const SignUp = () => {
 
     try{
 
-      const resUE = await fetch('api/register', {
+      const resUE = await fetch('api/userExists', {
         method: 'POST',
+        headers: {
+          "Content-type": "application/json"
+        },
         body: JSON.stringify({
             username
         })
@@ -91,7 +94,7 @@ const SignUp = () => {
                   height = {470}
                   className="object-contain"/>
       <div className="w-full login_container">
-        <nav className="flex flex-col bg-white rounded-3xl w-full h-full gap-4 py-5 px-28 shadow-xl">
+        <nav className="flex flex-col bg-white rounded-3xl w-full h-full gap-4 py-5 px-[20%] shadow-xl">
           <input
                   type = "text"
                   placeholder='Username'
@@ -111,6 +114,9 @@ const SignUp = () => {
                 <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full">
                     Sign In
                 </button>
+
+                {/* when movie break these two into rows */}
+
                 <button type = "submit" onClick={handleSignUp} className="blue_btn text-base mt-4 w-full">
                     Sign Up
                 </button>
