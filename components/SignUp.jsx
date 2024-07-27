@@ -64,16 +64,16 @@ const SignUp = () => {
   const handleSignIn = async(e) => {
       e.preventDefault();
 
-      if(!username || !password){
-          alert("Both fields are required");
-          return;
-      }
+      // if(!username || !password){
+      //     alert("Both fields are required");
+      //     return;
+      // }
 
       try{
         const res = await signIn('credentials', {
             username, password,
             redirect: false
-        })
+        });
 
         if(res.error){
           alert("Your username or password may be incorrect")

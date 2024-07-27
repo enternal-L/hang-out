@@ -9,7 +9,7 @@ const authOptions = {
 
             async authorize(credentials) {
                 const user = { id: "1" }
-                return user;
+                return null;
             }
         })
     ],
@@ -20,7 +20,7 @@ const authOptions = {
 
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
-        signIn:"/"
+        signIn: "/"
     }
 };
 
