@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Form from "@components/Form"
 import Nav from '@components/Nav'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
 const Creating = () => {
@@ -54,6 +54,7 @@ const Creating = () => {
             submitting={submitting}
             handleSubmit={CreatePrompt}
             />
+            <button type='submit'>submit</button>
         </>
     )
 }
