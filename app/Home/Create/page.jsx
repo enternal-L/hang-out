@@ -54,7 +54,6 @@ const Creating = () => {
             submitting={submitting}
             handleSubmit={CreatePrompt}
             />
-            <button type='submit'>submit</button>
         </>
     )
 }

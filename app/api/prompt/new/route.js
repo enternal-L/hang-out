@@ -1,14 +1,13 @@
 import {connectToDB} from "@utils/mongodb";
-import prompt from "@models/prompt";
+import Prompt from "@models/prompt";
 
 export const POST = async (request) => {
-    const {userId, prompt, subject, media, description} = await request.json();
+    const {userId, subject, media, description} = await request.json();
 
     try{
         await connectToDB();
         const newPrompt = new Prompt({
             creator: userId,
-            prompt,
             subject,
             media,
             description
