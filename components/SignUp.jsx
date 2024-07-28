@@ -48,7 +48,7 @@ const SignUp = () => {
       });
 
       if(res.ok){
-        router.push("/Home");
+        router.replace("Home");
       }
 
       else{
@@ -64,10 +64,10 @@ const SignUp = () => {
   const handleSignIn = async(e) => {
       e.preventDefault();
 
-      // if(!username || !password){
-      //     alert("Both fields are required");
-      //     return;
-      // }
+      if(!username || !password){
+          alert("Both fields are required");
+          return;
+      }
 
       try{
         const res = await signIn('credentials', {
@@ -107,8 +107,9 @@ const SignUp = () => {
                   placeholder='Password'
                   onChange={(e) => {setPassword(e.target.value)}}
                   required
-                  className='form_input outline-none'
-          />
+                  className='form_input outline-none'/>
+
+          <span><input type="checkbox"></input>Show Password</span>
 
           <div className="w-full flex flex-row flex-center gap-3">
                 <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full">
