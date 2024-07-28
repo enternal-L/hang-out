@@ -11,6 +11,7 @@ const SignUp = () => {
   const router = useRouter();
   const [username, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShow] = useState(false);
 
   const handleSignUp = async(e) => {
     e.preventDefault();
@@ -79,7 +80,7 @@ const SignUp = () => {
           alert("Your username or password may be incorrect")
           return;
         }
-
+        
         router.replace("Home");
 
       } catch (error){
@@ -103,20 +104,20 @@ const SignUp = () => {
                   className='form_input outline-none'
           />
           <input
-                  type = "password"
+                  type = {(showPass) ? ("") : ("password")}
                   placeholder='Password'
                   onChange={(e) => {setPassword(e.target.value)}}
                   required
                   className='form_input outline-none'/>
 
-          <span><input type="checkbox"></input>Show Password</span>
+          <span className="flex flex-row gap-2 items-center"><input className="size-5"type="checkbox" onChange={() => {setShow(!showPass)}}></input>Show Password</span>
 
           <div className="w-full flex flex-row flex-center gap-3">
                 <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full">
                     Sign In
                 </button>
 
-                {/* when movie break these two into rows */}
+                {/* when phone screen break these two into rows */}
 
                 <button type = "submit" onClick={handleSignUp} className="blue_btn text-base mt-4 w-full">
                     Sign Up
