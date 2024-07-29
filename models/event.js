@@ -1,20 +1,23 @@
-import { Schema, model, models } from "mongoose";
+import {Schema, model, models} from "mongoose";
 
-const PromptSchema = new Schema({
+const EventSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
     },
-    prompt: {
+    subject: {
         type: String,
-        required: [true, 'Prompt is required.']
+        required: [true, "Subject is required"],
     },
-    tag: {
+    description: {
         type: String,
-        required : [true, 'Tag is required.']
-    }  
+        required: [true, "Description"],
+    },
+    media: {
+        type: String,
+        required: [false, "attach link"],
+    }
 });
 
-const Prompt = models.Prompt || model('Prompt', PromptSchema);
-
-export default Prompt;
+const Event = models.Event || model("Event", EventSchema);
+export default Event;

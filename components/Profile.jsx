@@ -9,8 +9,6 @@ const Profile = () => {
 
     const { data: session } = useSession();
 
-    {console.log(session?.user?.name)}
-
     return (
         <>
             <div className='flex flex-row'>
@@ -20,7 +18,7 @@ const Profile = () => {
                             height = {50}
                             className="object-contain"/>
                 <div>
-                    Name:
+                    Name: {session?.user?.name}
                 </div>
                 <button onClick={() => {signOut()}}>
                     Log Out

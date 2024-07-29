@@ -16,7 +16,7 @@ const Creating = () => {
         description: ''
     })
 
-    const CreatePrompt = async (e) => {
+    const CreateEvent = async (e) => {
         //TODO
         e.preventDefault();
         setSubmitting(true);
@@ -37,12 +37,11 @@ const Creating = () => {
             }
         }
         catch (error){
-            console.log(error);
+            console.log("Error occured" , error);
         }
         finally{
             setSubmitting(false);
         }
-        //
     };
 
     return (
@@ -52,7 +51,7 @@ const Creating = () => {
             post={post}
             setPost={setPost}
             submitting={submitting}
-            handleSubmit={CreatePrompt}
+            handleSubmit={CreateEvent}
             />
         </>
     )

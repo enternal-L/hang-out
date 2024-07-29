@@ -13,12 +13,16 @@ const Form = ({ post, setPost, submitting, handleSubmit}) => {
                 required
                 className='form_textarea'
               />
+            </label>  
+            <label>
               <textarea 
                 value={post.media}
                 onChange={(e) => setPost({...post, media: e.target.value})}
                 placeholder='Media'
                 className='form_textarea'
               />
+            </label>  
+            <label>
               <textarea 
                 value={post.description}
                 onChange={(e) => setPost({...post, description: e.target.value})}
@@ -26,11 +30,19 @@ const Form = ({ post, setPost, submitting, handleSubmit}) => {
                 className='form_textarea'
               />
             </label>
-            <Link href="/Home"
-            disabled={submitting}
-            className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
-          > submit
-          </Link>
+
+            <div className="flex-end mx-3 mb-5 gap-4">
+                <Link className="text-gray-500 text-sm" href="/Home">
+                  cancel
+                </Link>
+                <button
+                  type='submit'
+                  disabled={submitting}
+                  className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+                >
+                  submit
+                </button>
+            </div>
           </form>
       </section>
     )
