@@ -9,14 +9,20 @@ const Profile = () => {
 
     const { data: session } = useSession();
 
+    const loaderProp =({ src }) => {
+        return src;
+    }
+
     return (
         <>
             <div className='flex flex-row'>
                 <h1>Account</h1>
-                <Image src = "/logo-white.png"
+                <Image src = {session?.user?.image}
                             width = {50} 
                             height = {50}
-                            className="object-contain"/>
+                            className="object-contain"
+                            loader={loaderProp}
+                            />
                 <div>
                     Name: {session?.user?.name}
                 </div>

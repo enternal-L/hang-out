@@ -28,9 +28,7 @@ export const authOptions = {
                         return null;
                     }
 
-                    else{
-                        return user;
-                    }
+                    return user;
                 } catch(error){
                     console.log("Error Occured ", error);
                 }
@@ -38,6 +36,21 @@ export const authOptions = {
 
         })
     ],
+
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.name = user.username;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user.id = token.id;
+            session.user.name = token.name;
+            return session;
+        }
+    },
     
     session: {
         strategy: "jwt",

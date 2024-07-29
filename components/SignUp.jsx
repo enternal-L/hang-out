@@ -49,7 +49,7 @@ const SignUp = () => {
       });
 
       if(res.ok){
-        router.replace("Home");
+        router.push("/Home")
       }
 
       else{

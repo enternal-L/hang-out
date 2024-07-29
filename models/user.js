@@ -11,6 +11,10 @@ const userSchema = new Schema({
         type:String,
         required: true
     },
+    image: {
+        type: String,
+        default: "https://imgur.com/a/Kwg3B0z"
+    }
 }, { timestamps: true });
 
 const User = models.User || mongoose.model("User", userSchema);
