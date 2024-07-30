@@ -18,6 +18,7 @@ const Profile = () => {
             <div className='flex flex-row'>
                 <h1>Account</h1>
                 <Image src = {session?.user?.image}
+                            alt="profile"
                             width = {50} 
                             height = {50}
                             className="object-contain"

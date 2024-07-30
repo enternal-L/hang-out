@@ -7,7 +7,6 @@ export async function POST(req) {
         await connectDB();
         const { username } = await req.json();
         const user = await User.findOne({username}).select("_id");
-        console.log("User: ", user);
 
         return NextResponse.json({ user });
      }

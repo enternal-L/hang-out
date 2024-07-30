@@ -39,15 +39,17 @@ export const authOptions = {
 
     callbacks: {
         async jwt({ token, user }) {
-            if (user) {
+            if(user) {
                 token.id = user.id;
                 token.name = user.username;
+                token.image = user.image;
             }
             return token;
         },
         async session({ session, token }) {
             session.user.id = token.id;
             session.user.name = token.name;
+            session.user.image = token.image;
             return session;
         }
     },

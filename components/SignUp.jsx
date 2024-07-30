@@ -48,13 +48,12 @@ const SignUp = () => {
         })
       });
 
-      if(res.ok){
-        router.push("/Home")
-      }
-
-      else{
+      if(res.error){
         console.log("Signin Failed");
       }
+
+      router.replace("Home");
+      router.refresh();
 
     } catch (error){
         console.log('Error during signin: ', error);
@@ -82,6 +81,7 @@ const SignUp = () => {
         }
         
         router.replace("Home");
+        router.refresh();
 
       } catch (error){
           console.log("Error Occured", error)

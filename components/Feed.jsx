@@ -1,17 +1,19 @@
 "use client";
+
 import {useState, useEffect} from "react"
 import EventCard from "./EventCard";
 
-const EventCardList = ({ data, handleTagClick }) => {
+const EventCardList = ({ data , handleTagClick }) => {
+
     return (
-      <div className="mt-16 prompt_layout">
-          {/* {data.map((post) => (
-            <EventCard 
-            key = {post._id}
-            post = {post}
-            handleTagClick = {handleTagClick}
-            />
-          ))} */}
+      <div className="flex flex-wrap gap-7 size-full justify-center">
+          { data.map((post) => (
+              <EventCard 
+              key = {post._id}
+              post = {post}
+              handleTagClick = {handleTagClick}
+              />
+          ))}
       </div>
     );
 };
@@ -24,22 +26,19 @@ const Feed = () => {
       const fetchPosts = async () => {
         const response = await fetch('/api/prompt');
         const data = await response.json();
-        
+
         setPosts(data);
       }
 
       fetchPosts();
-
-  }, [])
+  }, []);
 
   return (
-    <section className="feed">
-      {/* <EventCard /> */}
-
-      <EventCardList>
-          data={posts}
-          handleTag={() => {}}
-      </EventCardList>
+    <section className="flex size-full">
+      <EventCardList
+        data={posts}
+        handleTag={() => {}}
+      />
     </section>
   )
 }

@@ -13,7 +13,7 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
-        default: "https://imgur.com/a/Kwg3B0z"
+        default: "https://i.imgur.com/p63FHhZ.jpg"
     }
 }, { timestamps: true });
 
