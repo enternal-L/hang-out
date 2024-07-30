@@ -89,13 +89,13 @@ const SignUp = () => {
   }
   
   return (
-    <div className="w-full h-full flex-center flex-col custom_color">
-      <Image src = "/logo-white.png"
+    <div className="w-full h-full flex-center flex-col bg-white">
+      <Image src = "/splash-blue.png"
                   width = {470} 
                   height = {470}
                   className="object-contain"/>
       <div className="w-full login_container">
-        <nav className="flex flex-col bg-white rounded-3xl w-full h-full gap-4 py-5 px-[20%] shadow-xl">
+        <nav className="flex flex-col custom_color rounded-3xl w-full h-full gap-4 py-5 px-[20%] drop-shadow-2xl">
           <input
                   type = "text"
                   placeholder='Username'
