@@ -89,7 +89,7 @@ const SignUp = () => {
   }
   
   return (
-    <div className="w-full h-full flex-center flex-col bg-white">
+    <div className="w-full h-full flex-center flex-col bg-slate-200">
       <Image src = "/splash-blue.png"
                   width = {470} 
                   height = {470}

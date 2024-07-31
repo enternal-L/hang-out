@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 //form
-const Form = ({ post, setPost, submitting, handleSubmit}) => {
+const Form = ({ post, setPost, submitting, handleSubmit }) => {
     return (
       <section className='w-full max-w-full flex-start flex-col'>
           <form onSubmit={handleSubmit} className='mt-10 w-full max-w-2x1 flex flex-col gap-7 glassmorphism'>
@@ -15,10 +15,10 @@ const Form = ({ post, setPost, submitting, handleSubmit}) => {
               />
             </label>  
             <label>
-              <textarea 
+              <input 
                 value={post.media}
                 onChange={(e) => setPost({...post, media: e.target.value})}
-                placeholder='Media'
+                type = "file"
                 className='form_textarea'
               />
             </label>  
@@ -29,6 +29,11 @@ const Form = ({ post, setPost, submitting, handleSubmit}) => {
                 placeholder='Description'
                 className='form_textarea'
               />
+            </label>
+
+            <label>
+              <input>
+              </input>
             </label>
 
             <div className="flex-end mx-3 mb-5 gap-4">

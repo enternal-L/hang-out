@@ -5,10 +5,12 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+
+import Dropdown from "./Dropdown";
+
 const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
-    {console.log(post)};
-
+    const router = useRouter();
     const peopleCount = 0;
 
     return (
@@ -29,11 +31,11 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                             alt="profile"
                             width = {30} 
                             height = {30}
-                            className="object-contain rounded-full border-black border-[1px]"/>
+                            className="object-contain rounded-full border-black"/>
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center">
-                            <span>three dots</span>
+                            <Dropdown/>
                         </div>
                     </div>
                 </div>

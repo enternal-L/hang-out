@@ -16,6 +16,14 @@ const EventSchema = new Schema({
     media: {
         type: String,
         required: [false, "attach link"],
+    },
+    date: {
+        type: Date,
+        required: [true, "set the date"]
+    },
+    location: {
+        type:String,
+        required: [true, "set the location"]
     }
 });
 
