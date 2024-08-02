@@ -14,7 +14,7 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     const peopleCount = 0;
 
     return (
-            <div className="bg-white w-[30%] h-fit my-8">
+            <div className="bg-white w-[30%] h-fit my-8 min-w-[250px]">
                 <div
                     className="object-contain w-full h-44"
                     style={{
@@ -35,7 +35,7 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center">
-                            <Dropdown/>
+                            {post._id}
                         </div>
                     </div>
                 </div>

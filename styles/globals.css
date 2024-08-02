@@ -12,6 +12,7 @@
   width: 100vw;
   min-height: 100vh;
   height: 100vh;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 @media screen and (max-width: 640px) {
@@ -27,7 +28,7 @@
 }
 
 .blue_btn {
-  @apply rounded-full border-2 border-[#90A6EB] bg-white py-1.5 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white text-center text-base font-semibold font-inter flex items-center justify-center;
+  @apply rounded-full border-2 border-white bg-white py-1.5 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white text-center text-base font-semibold font-inter flex items-center justify-center;
 }
 
 .outline_btn {
@@ -90,7 +91,7 @@
 }
 
 .dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2;
+  @apply absolute right-0 top-0 mt-3 w-full p-5 rounded-3xl bg-white min-w-[260px] flex flex-col gap-2 border-[5px] border-[#90A6EB] z-[1];
 }
 
 .dropdown_link {
@@ -133,4 +134,8 @@
 
 .behind{
   z-index: -1;
+}
+
+.profile_info{
+  @apply rounded-full border-4 border-[#90A6EB] w-full text-start px-4 text-base mx-5
 }

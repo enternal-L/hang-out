@@ -33,6 +33,14 @@ const Feed = () => {
       fetchPosts();
   }, []);
 
+  const handleEdit = () => {
+    
+  }
+
+  const handleDelete = async() => {
+
+  }
+
   return (
     <section className="flex size-full">
       <EventCardList
