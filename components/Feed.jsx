@@ -7,7 +7,7 @@ const EventCardList = ({ data , handleTagClick }) => {
 
     return (
       <div className="flex flex-wrap gap-7 size-full justify-center">
-          { data.map((post) => (
+          {data.map((post) => (
               <EventCard 
               key = {post._id}
               post = {post}

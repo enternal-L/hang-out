@@ -52,7 +52,7 @@ export const DELETE = async(request, { params }) => {
 
         await Event.findByIdAndDelete(params._id);
 
-        return new Response("Eventdeleted successfully", { status : 200 });
+        return new Response("Event deleted successfully", { status : 200 });
     }catch(error){
         return new Response("Failed to delete event", { status : 500 });
     }

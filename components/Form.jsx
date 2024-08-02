@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 //form
-const Form = ({ post, setPost, submitting, handleSubmit }) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
     return (
       <section className='w-full h-full max-w-full flex-start flex-row pb-7'>
         <form onSubmit={handleSubmit} className="w-full h-full flex">
@@ -19,7 +19,8 @@ const Form = ({ post, setPost, submitting, handleSubmit }) => {
                 onChange={(e) => setPost({...post, media: e.target.value})}
                 type = "file"
                 placeholder="add media"
-                className='form_field rounded_corners h-60 p-4'
+                className='form_field rounded_corners h-60 p-4 opacity-0;'
+                accept="image/*"
               />
             <textarea 
               value={post.description}
@@ -28,9 +29,9 @@ const Form = ({ post, setPost, submitting, handleSubmit }) => {
               className='form_field p-3 h-64 text-lg'
             />
           </div>
-          <div className="bg-white w-[45%] h-full rounded_corners flex flex-col gap-4 p-8 pt-[75px]">
-              <div className="flex flex-row w-full h-44 flex-center px-4">
-                  <Link className="blue_btn " href="/Home">
+          <div className="bg-white w-[45%] h-full rounded_corners flex flex-col gap-4 p-8 pt-16">
+              <div className="flex flex-row w-full h-44 flex-center px-4 gap-2">
+                  <Link className="blue_btn h-20 w-52" href="/Home">
                     Cancel
                   </Link>
                   <button
@@ -38,22 +39,30 @@ const Form = ({ post, setPost, submitting, handleSubmit }) => {
                     disabled={submitting}
                     className='w-full h-full custom_color text-white text-4xl text-bold rounded-xl'
                   >
-                    Publish
+                    {type}
                   </button>
               </div>
-              <div className="flex flex-row w-full h-full flex-wrap gap-3">
-                  <button className="w-full bbb">
-                    add location
-                  </button>
-                  <button className="w-[45%] bbb">
-                    select date
-                  </button>
-                  <button className="w-[45%] bbb">
-                    select time
-                  </button>
+              <div className="flex flex-row w-full h-20 flex-wrap gap-3 flex-center">
+                  <input className="w-full bbb h-20 px-4 text-2xl"
+                    placeholder="add location"
+                  ></input>
               </div>
+
+              <div className="flex flex-row w-full h-40 gap-3 flex-center">
+                    <input className="w-full bbb flex-center h-20"
+                      placeholder="select date"
+                      type="date"
+                    >
+                    </input>
+                    <input className="w-full bbb flex-center h-20"
+                      placeholder="select time"
+                      type="time"
+                    >
+                    </input>
+              </div>
+
               <div className="flex flex-row w-full h-full">
-                  <h1>Event Color</h1>
+                  <h1 className="text-5xl">Event Color</h1>
                   <ul className='flex flex-row gap-2 flex-center'>
                     <li>Color</li>
                     <li>Color</li>

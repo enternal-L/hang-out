@@ -24,6 +24,10 @@ const EventSchema = new Schema({
     location: {
         type:String,
         required: [true, "set the location"]
+    },
+    color: {
+        type:String,
+        required: [true, "set the color"]
     }
 });
 

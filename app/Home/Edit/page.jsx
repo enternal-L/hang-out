@@ -5,7 +5,7 @@ import Nav from '@components/Nav'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
-const Creating = () => {
+const Editing = () => {
     const router = useRouter();
     const {data: session} = useSession();
 
@@ -48,7 +48,7 @@ const Creating = () => {
         <>
             <Nav />
             <Form
-            type="Publish"
+            type="Edit"
             post={post}
             setPost={setPost}
             submitting={submitting}
@@ -58,4 +58,4 @@ const Creating = () => {
     )
 }
 
-export default Creating
+export default Editing
