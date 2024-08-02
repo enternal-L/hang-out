@@ -139,3 +139,11 @@
 .profile_info{
   @apply rounded-full border-4 border-[#90A6EB] w-full text-start px-4 text-base mx-5
 }
+
+.form_field{
+  @apply w-full border-dashed border-black border-2 outline-none resize-none bg-transparent
+}
+
+.bbb{
+  @apply border-2 border-black bg-white font-bold text-black rounded-md
+}

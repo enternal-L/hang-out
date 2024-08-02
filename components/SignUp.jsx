@@ -113,13 +113,13 @@ const SignUp = () => {
           <span className="flex flex-row gap-2 items-center"><input className="size-5"type="checkbox" onChange={() => {setShow(!showPass)}}></input>Show Password</span>
 
           <div className="w-full flex flex-row flex-center gap-3">
-                <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full">
+                <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full min-h-6">
                     Sign In
                 </button>
 
                 {/* when phone screen break these two into rows */}
 
-                <button type = "submit" onClick={handleSignUp} className="blue_btn text-base mt-4 w-full">
+                <button type = "submit" onClick={handleSignUp} className="blue_btn text-base mt-4 w-full min-h-6">
                     Sign Up
                 </button>
           </div>
