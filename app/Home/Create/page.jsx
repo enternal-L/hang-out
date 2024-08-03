@@ -14,6 +14,7 @@ const Creating = () => {
         subject: '',
         media: '',
         description: '',
+        location: '',
         date: '',
         time: '',
         color: ''
@@ -32,6 +33,7 @@ const Creating = () => {
                     subject: post.subject,
                     media: post.media,
                     description: post.description,
+                    location: post.location,
                     date: post.date,
                     time: post.time,
                     color: post.color
