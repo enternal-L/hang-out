@@ -25,7 +25,7 @@ export const PATCH = async (request, { params }) => {
     try{
         await connectDB();
 
-        const existingEvent = await Event.findById(params._id);
+        const existingEvent = await Event.findById(params.id);
 
         if(!existingEvent){
             return new Response("Event not found", { status : 404 });
@@ -50,7 +50,7 @@ export const DELETE = async(request, { params }) => {
     try{
         await connectDB();
 
-        await Event.findByIdAndDelete(params._id);
+        await Event.findByIdAndDelete(params.id);
 
         return new Response("Event deleted successfully", { status : 200 });
     }catch(error){
