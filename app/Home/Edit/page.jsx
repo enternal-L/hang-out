@@ -15,6 +15,7 @@ const Editing = () => {
         subject: '',
         media: '',
         description: '',
+        location: '',
         date: '',
         time: '',
         color: ''
@@ -28,6 +29,7 @@ const Editing = () => {
           setPost({
             subject: data.subject,
             description: data.description,
+            location: data.location,
             date: data.date?.split('T')[0],
             time: data.time,
             color: data.color
@@ -35,17 +37,47 @@ const Editing = () => {
         }
 
         if(eventId) getEventDetails();
-    }, [eventId])
+    }, [eventId]);
+
+    const updateEvent = async (e) => {
+      e.preventDefault();
+      setSubmitting(true);
+  
+      if (!eventId) return alert("Missing eventId!");
+  
+      try {
+          const response = await fetch(`/api/prompt/${eventId}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                subject: post.subject,
+
+                description: post.description,
+                location: post.location,
+                date: post.date,
+                time: post.time,
+                color: post.color
+              })
+          });
+    
+          if (response.ok) {
+            router.push("/Home");
+          }
+      } catch (error) {
+          console.log("Error occured" , error);
+      } finally {
+          setSubmitting(false);
+      }
+    };
 
     return (
         <>
             <Nav />
             <Form
-            type="Edit"
+            type="Save"
             post={post}
             setPost={setPost}
             submitting={submitting}
-            handleSubmit={() => {}}
+            handleSubmit={updateEvent}
             />
         </>
     )

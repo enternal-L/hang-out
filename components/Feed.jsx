@@ -4,7 +4,7 @@ import {useState, useEffect} from "react"
 import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
 
-const EventCardList = ({ data , handleTagClick, handleEdit }) => {
+const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
     return (
       <div className="flex flex-wrap gap-7 size-full justify-center">
           {data.map((post) => (
@@ -13,6 +13,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit }) => {
               post = {post}
               handleTagClick = {handleTagClick}
               handleEdit={() => {handleEdit(post)}}
+              handleDelete={() => {handleDelete(post)}}
               />
           ))}
       </div>
@@ -36,11 +37,28 @@ const Feed = () => {
   }, []);
 
   const handleEdit = (post) => {
-    router.push(`/Home/Edit?id=${post._id}`)
+      router.push(`/Home/Edit?id=${post._id}`)
   }
 
-  const handleDelete = async() => {
+  const handleDelete = async(post) => {
+      const isConfirmed = confirm("Are you sure to delete this event?");
+      
+      if(isConfirmed){
+        try{
+            await fetch(`/api/prompt/${post._id.toString
+            ()}`, {
+              method: "DELETE"
+            });
 
+            const filteredEvents = posts.filter((p) => {
+              p._id !== post._id;
+            })
+
+            setPosts(filteredEvents);
+        } catch(error){
+            console.log("Error Occured", error);
+        }
+      }
   }
 
   return (
@@ -49,6 +67,7 @@ const Feed = () => {
         data={posts}
         handleTag={() => {}}
         handleEdit={handleEdit}
+        handleDelete={handleDelete}
       />
     </section>
   )

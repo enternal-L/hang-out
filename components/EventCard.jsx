@@ -47,6 +47,7 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                         <p className="custom_color rounded-md w-full p-2 flex-center">{peopleCount} attending</p>
                         <p className="custom_color rounded-md w-full p-2 flex-center">Date:</p>
                         <p className="cursor-pointer" onClick={handleEdit}>Edit</p>
+                        <p className="cursor-pointer" onClick={handleDelete}>Delete</p>
                 </div>
             </div>
     )

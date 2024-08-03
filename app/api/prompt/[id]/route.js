@@ -20,7 +20,7 @@ export const GET = async (req, { params }) => {
 
 // PATCH (update)
 export const PATCH = async (request, { params }) => {
-    const { subject, description, media, date, location } = await request.json();
+    const { subject, description, media, location, date, time, color } = await request.json();
 
     try{
         await connectDB();
@@ -34,14 +34,16 @@ export const PATCH = async (request, { params }) => {
         existingEvent.subject = subject;
         existingEvent.description = description;
         existingEvent.media = media;
+        existingEvent.time = time;
         existingEvent.date = date;
         existingEvent.location = location;
+        existingEvent.color = color;
 
         await existingEvent.save();
 
-        return new Response(JSON.stringify(existingEvent), { status: 200 })
+        return new Response("Successfully updated event", { status: 200 })
     } catch(error){
-        return new Response("Failed to update event"), { status: 500 }
+        return new Response("Failed to update event", { status: 500 })
     }
 }
 
@@ -51,6 +53,8 @@ export const DELETE = async(request, { params }) => {
         await connectDB();
 
         await Event.findByIdAndDelete(params.id);
+
+        {console.log("Deleted?")}
 
         return new Response("Event deleted successfully", { status : 200 });
     }catch(error){
