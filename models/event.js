@@ -21,6 +21,10 @@ const EventSchema = new Schema({
         type: Date,
         required: [true, "set the date"]
     },
+    time: {
+        type: String,
+        required: [true, "set the time"]
+    },
     location: {
         type:String,
         required: [true, "set the location"]
