@@ -3,6 +3,8 @@ import Link from "next/link";
 //form
 const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
+    {console.log(post)};
+
     return (
       <section className='w-full h-full max-w-full flex-start flex-row pb-7'>
         <form onSubmit={handleSubmit} className="w-full h-full flex">
