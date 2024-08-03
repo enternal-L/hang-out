@@ -13,7 +13,10 @@ const Creating = () => {
     const [post, setPost] = useState({
         subject: '',
         media: '',
-        description: ''
+        description: '',
+        date: '',
+        time: '',
+        color: ''
     })
 
     const CreateEvent = async (e) => {
@@ -28,7 +31,10 @@ const Creating = () => {
                     userId: session?.user.id,
                     subject: post.subject,
                     media: post.media,
-                    description: post.description
+                    description: post.description,
+                    date: post.date,
+                    time: post.time,
+                    color: post.color
                 })
             });
 
