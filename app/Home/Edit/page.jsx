@@ -1,61 +1,41 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+
 import Form from "@components/Form"
 import Nav from '@components/Nav'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 const Editing = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const eventId = searchParams.get('id')
+    const eventId = searchParams.get('id');
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
         subject: '',
         media: '',
-        description: ''
-    })
+        description: '',
+        date: '',
+        time: '',
+        color: ''
+    });
 
     useEffect(() => {
-        const getPromptDetails = async () => {
-            const response = await fetch(`/api/prompt/${eventId}`);
-            const data = await response.json();
+        const getEventDetails = async() => {
+          const response = await fetch(`/api/prompt/${eventId}`);
+          const data = await response.json();
 
-            setPost({
-                subject: data.subject,
-                media: data.media,
-                description: data.description
-            }) 
+          setPost({
+            subject: data.subject,
+            description: data.description,
+            date: data.date?.split('T')[0],
+            time: data.time,
+            color: data.color
+          })
         }
 
-        if(eventId) getPromptDetails();
-    }, [eventId]);
-
-    {console.log(eventId)}
-
-    const updatePrompt = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-    
-        if (!eventId) return alert("Missing EventId!");
-    
-        try {
-          const response = await fetch(`/api/prompt/${promptId}`, {
-            method: "PATCH",
-            body: JSON.stringify({
-              
-            }),
-          });
-    
-          if (response.ok) {
-            router.push("/");
-          }
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setSubmitting(false);
-        }
-      };
+        if(eventId) getEventDetails();
+    }, [eventId])
 
     return (
         <>
@@ -65,7 +45,7 @@ const Editing = () => {
             post={post}
             setPost={setPost}
             submitting={submitting}
-            handleSubmit={updatePrompt}
+            handleSubmit={() => {}}
             />
         </>
     )
