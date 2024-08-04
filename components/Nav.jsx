@@ -20,7 +20,7 @@ const Nav = () => {
       </Link>
 
       <div className='flex gap-2 flex-center relative'>
-        <Link href="/Home/Create" className='z-[2] pt-8'>
+        <Link href="/Home" className='z-[2] pt-8'>
               <div className='bg-black size-[67px] rounded-full'>
 
               </div>
