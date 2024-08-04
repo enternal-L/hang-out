@@ -50,9 +50,9 @@ const Feed = () => {
               method: "DELETE"
             });
 
-            const filteredEvents = posts.filter((p) => {
-              p._id !== post._id;
-            })
+            const filteredEvents = posts.filter((p) => 
+              p._id !== post._id
+            );
 
             setPosts(filteredEvents);
         } catch(error){

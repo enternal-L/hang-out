@@ -54,8 +54,6 @@ export const DELETE = async(request, { params }) => {
 
         await Event.findByIdAndDelete(params.id);
 
-        {console.log("Deleted?")}
-
         return new Response("Event deleted successfully", { status : 200 });
     }catch(error){
         return new Response("Failed to delete event", { status : 500 });
