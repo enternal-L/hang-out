@@ -6,15 +6,26 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-import Dropdown from "./Dropdown";
-
-const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+const EventCard = ({ post, ind, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown }) => {
 
     const router = useRouter();
     const peopleCount = 0;
 
     return (
-            <div className="bg-white w-[30%] h-fit my-8 min-w-[250px]">
+            <div className="bg-white w-[30%] h-fit my-8 min-w-[250px] relative z-[1]">
+                {dropDown && (
+                    <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
+                        <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-6'>
+                            <p>Share</p>
+                            <Image src = "/pen-square.svg" alt="edit" width = {50} height = {50}
+                            className="object-contain cursor-pointer" onClick={handleEdit}/>
+                            <p>Archive</p>
+                            <p>Star</p>
+                            <Image src = "/trashcan.svg" alt="delete" width = {50} height = {50} 
+                            className="object-contain cursor-pointer" onClick={handleDelete}/>
+                        </div>
+                    </div>
+                )}
                 <div
                     className="object-contain w-full h-44"
                     style={{
@@ -34,8 +45,8 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                             className="object-contain rounded-full border-black"/>
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
-                        <div className="flex justify-end w-full items-center">
-                            {post._id}
+                        <div className="flex justify-end w-full items-center z-[3]">
+                            <button className="" onClick={handleDropdown}>...</button>
                         </div>
                     </div>
                 </div>
@@ -44,13 +55,11 @@ const EventCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                     <p className="px-3">{post.description}</p>
                 </div>
                 <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="custom_color rounded-md w-full p-2 flex-center">{peopleCount} attending</p>
-                        <p className="custom_color rounded-md w-full p-2 flex-center">{post.date.split('T')[0]}, {post.time}</p>
-                        <p className="cursor-pointer" onClick={handleEdit}>Edit</p>
-                        <p className="cursor-pointer" onClick={handleDelete}>Delete</p>
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{peopleCount} attending</p>
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.date.split('T')[0]}, {post.time}</p>
                 </div>
                 <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="custom_color rounded-md w-full p-2 flex-center">{post.location}</p>
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.location}</p>
                 </div>
             </div>
     )

@@ -3,17 +3,39 @@
 import {useState, useEffect} from "react"
 import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
+import { useSession } from 'next-auth/react';
 
 const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
+
+    const [toggleStates, setToggles] = useState([]);
+
+    useEffect(() => {
+        setToggles(Array(data.length).fill(false));
+    }, [data]);
+
+    const toggleDropDown = (id) => {
+      if(!toggleStates){
+        return;
+      }
+
+      const copied = [...toggleStates];
+      copied[id] = !copied[id];
+
+      setToggles(copied);
+    }
+
     return (
       <div className="flex flex-wrap gap-7 size-full justify-center">
-          {data.map((post) => (
+          {toggleStates.length > 0 && data.map((post, index) => (
               <EventCard 
               key = {post._id}
               post = {post}
+              ind = {index}
               handleTagClick = {handleTagClick}
               handleEdit={() => {handleEdit(post)}}
               handleDelete={() => {handleDelete(post)}}
+              handleDropdown={() => {toggleDropDown(index)}}
+              dropDown = {toggleStates[index]}
               />
           ))}
       </div>
@@ -21,20 +43,26 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
 };
 
 const Feed = () => {
-
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
-      const fetchPosts = async () => {
+    if(session?.user?.id){
+      const fetchPosts = async() => {
         const response = await fetch('/api/prompt');
         const data = await response.json();
 
-        setPosts(data);
+        const filteredData = data.filter((p) => 
+          p.creator._id === session?.user?.id
+        );
+
+        setPosts(filteredData);
       }
 
-      fetchPosts();
-  }, []);
+      fetchPosts(session.user.id);
+    }
+  }, [session]);
 
   const handleEdit = (post) => {
       router.push(`/Home/Edit?id=${post._id}`)
@@ -59,6 +87,10 @@ const Feed = () => {
             console.log("Error Occured", error);
         }
       }
+  }
+
+  const handleTagClick = () => {
+
   }
 
   return (
