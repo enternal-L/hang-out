@@ -12,10 +12,10 @@ const Editing = () => {
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
-        subject: '',
+        subject: 'loading...',
         media: '',
-        description: '',
-        location: '',
+        description: 'loading...',
+        location: 'loading...',
         date: '',
         time: '',
         color: ''
@@ -50,7 +50,7 @@ const Editing = () => {
             method: "PATCH",
             body: JSON.stringify({
                 subject: post.subject,
-
+                
                 description: post.description,
                 location: post.location,
                 date: post.date,

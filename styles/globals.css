@@ -21,6 +21,10 @@
   }
 }
 
+input {
+  background-color: white;
+}
+
 /* Tailwind Styles */
 
 .app {
@@ -82,7 +86,7 @@
 }
 
 .form_input {
-  @apply w-full flex font-semibold rounded-md border-[2px] border-[#90A6EB] mt-2 p-3 text-lg text-[#90A6EB];
+  @apply w-full flex font-semibold rounded-md border-[2px] border-[#90A6EB] mt-2 p-3 text-lg bg-white;
 }
 
 /* Nav Component */
@@ -146,4 +150,12 @@
 
 .bbb{
   @apply border-2 border-black bg-white font-bold text-black rounded-md
+}
+
+.color_selector{
+  @apply w-10 h-10 rounded-full cursor-pointer border-black
+}
+
+.angled-semi-circle {
+  border-radius: 100px 100px 0 0;
 }

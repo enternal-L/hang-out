@@ -89,28 +89,35 @@ const SignUp = () => {
   }
   
   return (
-    <div className="w-full h-full flex-center flex-col bg-slate-200">
-      <Image src = "/splash-blue.png"
+    <div className="w-full h-full flex-center flex-row bg-white">
+      <div className="w-[30%] flex-center self-end">
+          <Image src = "/bird.PNG"
+                      width = {450} 
+                      height = {450}
+                      className="object-contain"/>
+      </div>
+      <div className="w-[40%] flex flex-col gap-2 flex-center">
+        <Image src = "/splash-blue.png"
                   width = {470} 
                   height = {470}
                   className="object-contain"/>
-      <div className="w-full login_container">
-        <nav className="flex flex-col custom_color rounded-3xl w-full h-full gap-4 py-5 px-[20%] drop-shadow-2xl">
+        <nav className="flex flex-col custom_color rounded-3xl w-[70%] gap-4 py-5 drop-shadow-2xl px-16 flex-center">
           <input
                   type = "text"
                   placeholder='Username'
                   onChange={(e) => {setUser(e.target.value)}}
                   required
-                  className='form_input outline-none'
+                  className='form_input outline-none bg-white'
           />
           <input
                   type = {(showPass) ? ("") : ("password")}
                   placeholder='Password'
                   onChange={(e) => {setPassword(e.target.value)}}
                   required
-                  className='form_input outline-none'/>
+                  className='form_input outline-none bg-white'
+          />
 
-          <span className="flex flex-row gap-2 items-center"><input className="size-5"type="checkbox" onChange={() => {setShow(!showPass)}}></input>Show Password</span>
+          <span className="flex flex-row gap-2 items-center self-start"><input className="size-5"type="checkbox" onChange={() => {setShow(!showPass)}}></input>Show Password</span>
 
           <div className="w-full flex flex-row flex-center gap-3">
                 <button type = "submit" onClick={handleSignIn} className="blue_btn text-base mt-4 w-full min-h-6">
@@ -125,6 +132,12 @@ const SignUp = () => {
           </div>
         </nav>
       </div>
+      <div className="w-[30%] flex-center self-start">
+          <Image src = "/mailman.PNG"
+          width = {455} 
+          height = {455}
+          className="object-contain"/>
+        </div>
     </div>
   )
 }

@@ -10,6 +10,7 @@ export const metadata = {
 const layout = ({ children }) => {
   return (
     <html lang = "en">
+        <link rel="icon" href="/favicon.ico"/>
         <body>
             <main className='app w-full h-full'>
                 <AuthProvider>{children}</AuthProvider>

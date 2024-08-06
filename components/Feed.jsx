@@ -30,7 +30,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
               <EventCard 
               key = {post._id}
               post = {post}
-              ind = {index}
+              color={post.color}
               handleTagClick = {handleTagClick}
               handleEdit={() => {handleEdit(post)}}
               handleDelete={() => {handleDelete(post)}}

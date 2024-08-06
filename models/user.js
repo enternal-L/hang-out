@@ -14,6 +14,14 @@ const userSchema = new Schema({
     image: {
         type: String,
         default: "https://i.imgur.com/p63FHhZ.jpg"
+    },
+    main_color: {
+        type: String,
+        default: "#90A6EB"
+    },
+    border_color: {
+        type: String,
+        default: "#FFFFFF"
     }
 }, { timestamps: true });
 

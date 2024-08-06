@@ -6,13 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-const EventCard = ({ post, ind, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown }) => {
+const EventCard = ({ post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown }) => {
 
     const router = useRouter();
     const peopleCount = 0;
 
     return (
-            <div className="bg-white w-[30%] h-fit my-8 min-w-[250px] relative z-[1]">
+            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative z-[1]`}>
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-6'>
