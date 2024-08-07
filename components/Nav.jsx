@@ -6,11 +6,53 @@ import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
 
-const Nav = ({setMain, mainColor, setBorder, borderColor, handleColor}) => {
+const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
   const { data: session } = useSession();
+  const userId = session?.user.id;
   const [ toggleDropDown, setDropDown ] = useState(false);
   const [ blackLogo, setBlackLogo ] = useState(true);
+  const [ colorSelected, setSelected ] = useState(-1);
+  const colorArr = [
+    ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
+    ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
+  ] //border color and main color
+
+  useEffect(() => {
+    const getColor = async() => {
+      const response = await fetch(`/api/user/${userId}`);
+      const data = await response.json();
+
+      if(!data.colorIndex){
+        updateColor(5);
+      }
+
+      else{
+        setMain(colorArr[data.colorIndex][1]);
+        setBorder(colorArr[data.colorIndex][0]);
+      }
+    }
+
+    if(userId) getColor();
+  }, [userId]);
+
+  const updateColor = async(index) => {
+    try {
+        const response = await fetch(`/api/user/${userId}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+              ind: index
+            })
+        });
+
+        if(response.ok){
+          console.log("Update successfully");
+        }
+
+    } catch (error) {
+        console.log("Error occured" , error);
+    }
+  };
 
   return (
     <nav className={`flex-between w-full py-5 pl-20 pr-16`} style={{ backgroundColor: borderColor }}>
@@ -43,16 +85,23 @@ const Nav = ({setMain, mainColor, setBorder, borderColor, handleColor}) => {
               <div className='flex flex-col pb-2 flex-center gap-2'>
                 <h1 className='text-2xl font-bold pt-20 px-4'>Theme</h1>
                 <ul className='flex flex-wrap gap-2 flex-center'>
-                  <Halfsquare left_color = "#000000" right_color = "#222831" setMain={setMain} setBorder={setBorder} selection={1} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#F1E5CB" right_color = "#467264" setMain={setMain} setBorder={setBorder} selection={2} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#FFFFFF" right_color = "#90A6EB" setMain={setMain} setBorder={setBorder} selection={2} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#F1E5CB" right_color = "#F28166" setMain={setMain} setBorder={setBorder} selection={2} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#B4C3F2" right_color = "#FFFFFF" setMain={setMain} setBorder={setBorder} selection={1} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#720455" right_color = "#FFFCAA" setMain={setMain} setBorder={setBorder} selection={1} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#FFFFFF" right_color = "#222831" setMain={setMain} setBorder={setBorder} selection={2} setBlackLogo={setBlackLogo}/>
-                  <Halfsquare left_color = "#FFC95F" right_color = "#F1E5CB" setMain={setMain} setBorder={setBorder} selection={1} setBlackLogo={setBlackLogo}/>
+                  {colorArr.map((value, index) => (
+                    <Halfsquare 
+                        key={index} 
+                        left_color={value[0]} 
+                        right_color={value[1]} 
+                        setMain={setMain} 
+                        setBorder={setBorder} 
+                        selection={index} 
+                        setBlackLogo={setBlackLogo}
+                        setSelected = {setSelected}
+                    />
+                  ))}
                 </ul>
-                <button className='blue_btn' onClick={() => {}}>Set Color</button>
+                {colorSelected >= 0 && <button className='blue_btn' onClick={() => {
+                  updateColor(colorSelected);
+                  setSelected(-1);
+                }}>Set Color</button>}
               </div>
               <div className='border-t-[3px] border-[#90A6EB] w-full rounded_corners'>
 

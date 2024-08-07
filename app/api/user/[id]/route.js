@@ -19,7 +19,7 @@ export const GET = async (req, { params }) => {
 
 // PATCH (update)
 export const PATCH = async (request, { params }) => {
-    const { main_color, border_color } = await request.json();
+    const { ind } = await request.json();
 
     try{
         await connectDB();
@@ -30,8 +30,7 @@ export const PATCH = async (request, { params }) => {
             return new Response("User not found", { status : 404 });
         }
 
-        user.main_color = main_color;
-        user.border_color = border_color;
+        user.colorIndex = ind;
 
         await user.save();
 

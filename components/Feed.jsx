@@ -28,14 +28,14 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
       <div className="flex flex-wrap gap-7 size-full justify-center">
           {toggleStates.length > 0 && data.map((post, index) => (
               <EventCard 
-              key = {post._id}
-              post = {post}
-              color={post.color}
-              handleTagClick = {handleTagClick}
-              handleEdit={() => {handleEdit(post)}}
-              handleDelete={() => {handleDelete(post)}}
-              handleDropdown={() => {toggleDropDown(index)}}
-              dropDown = {toggleStates[index]}
+                key = {post._id}
+                post = {post}
+                color={post.color}
+                handleTagClick = {handleTagClick}
+                handleEdit={() => {handleEdit(post)}}
+                handleDelete={() => {handleDelete(post)}}
+                handleDropdown={() => {toggleDropDown(index)}}
+                dropDown = {toggleStates[index]}
               />
           ))}
       </div>

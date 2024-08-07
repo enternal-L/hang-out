@@ -3,6 +3,7 @@ import Event from "@models/event";
 
 // GET (read)
 export const GET = async (req, { params }) => {
+
     try{
         await connectDB();
 
