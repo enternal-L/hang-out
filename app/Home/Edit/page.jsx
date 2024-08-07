@@ -18,8 +18,9 @@ const Editing = () => {
         media: '',
         description: 'loading...',
         location: 'loading...',
-        date: '',
-        time: '',
+        date: '0000-00-00',
+        start_time: '00:00',
+        end_time: '00:00',
         color: ''
     });
 
@@ -33,7 +34,8 @@ const Editing = () => {
             description: data.description,
             location: data.location,
             date: data.date?.split('T')[0],
-            time: data.time,
+            start_time: data.start_time,
+            end_time: data.end_time,
             color: data.color
           })
         }
@@ -52,11 +54,12 @@ const Editing = () => {
             method: "PATCH",
             body: JSON.stringify({
                 subject: post.subject,
-                
+
                 description: post.description,
                 location: post.location,
                 date: post.date,
-                time: post.time,
+                start_time: post.start_time,
+                end_time: post.end_time,
                 color: post.color
               })
           });

@@ -2,7 +2,7 @@ import { connectDB } from "@utils/mongodb";
 import Event from "@models/event";
 
 export const POST = async (request) => {
-    const {userId, subject, media, description, location, date, time, color} = await request.json();
+    const {userId, subject, media, description, location, date, start_time, end_time, color} = await request.json();
 
     try{
         await connectDB();
@@ -13,7 +13,8 @@ export const POST = async (request) => {
             description,
             location,
             date,
-            time,
+            start_time,
+            end_time,
             color
         });
 

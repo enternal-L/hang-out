@@ -1,12 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 
 //form
 const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor }) => {
     return (
       <section className='w-full h-full max-w-full flex-start flex-row pb-7' style={{backgroundColor : borderColor}}>
         <form onSubmit={handleSubmit} className="w-full h-full flex">
-        <div className="w-full h-full flex-row rounded_corners flex-center mx-11 p-4 gap-7" style={{backgroundColor : mainColor}}>
-          <div className="w-[55%] h-full bg-[#F1E5CB] rounded_corners flex-center flex-col gap-4 p-8">
+        <div className="w-full h-full flex-row rounded_corners flex-center mx-11 p-5 gap-7" style={{backgroundColor : mainColor}}>
+          <div className="w-[60%] h-full bg-[#F1E5CB] rounded_corners flex-center flex-col gap-4 p-8">
             <textarea 
                   value={post.subject}
                   onChange={(e) => setPost({...post, subject: e.target.value})}
@@ -29,53 +30,89 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
               className='form_field p-3 h-64 text-lg'
             />
           </div>
-          <div className="bg-white w-[45%] h-full rounded_corners flex flex-col gap-6 p-8 pt-16">
-              <div className="flex flex-row w-full h-44 flex-center px-4 gap-2">
-                  <Link className="blue_btn h-20 w-52 cursor-pointer" href="/Home">
-                    Cancel
-                  </Link>
-                  <button
-                    type='submit'
-                    disabled={submitting}
-                    className='w-full h-full custom_color text-white text-4xl text-bold rounded-xl'
-                  >
-                    {type}
-                  </button>
+          <div className="w-[40%] h-full rounded_corners flex flex-col gap-5 p-4 pt-6">
+              <div className="flex flex-row w-full h-20 flex-center px-10 gap-2">
+                  <div className="flex flex-row w-full gap-2">
+                    <div className="relative w-70 h-70">
+                      <Image src = "/default-icon.PNG"
+                          width = {65} 
+                          height = {65}
+                          className="object-contain bg-white border-4 border-black rounded-full"
+                        alt='logo'/>
+                      <p className="absolute top-0 right-0 text-3xl font-bold text-black plus-sign">+</p>
+                    </div>
+                    <Image src = "/quill.svg"
+                        width = {65} 
+                        height = {65}
+                        className="object-contain bg-white border-4 border-black rounded-full"
+                      alt='draft'/>
+                  </div>
+                  <div className="flex flex-row w-full gap-2 h-16">
+                    <Link className="outline_btn h-full text-3xl font-bold cursor-pointer" href="/Home">
+                      Cancel
+                    </Link>
+                    <button
+                      type='submit'
+                      disabled={submitting}
+                      className='w-full h-full outline_btn text-white text-3xl font-bold rounded-xl'
+                    >
+                      {type}
+                    </button>
+                  </div>
               </div>
-              <div className="flex flex-row w-full h-20 flex-wrap gap-3 flex-center">
-                  <input className="w-full bbb h-20 px-4 text-2xl"
-                    placeholder="add google map location"
-                    value={post.location}
-                    onChange={(e) => setPost({...post, location: e.target.value})}
-                  ></input>
+              <div className="bg-white border-4 border-black rounded_corners flex flex-center flex-col p-6 gap-1">
+                <div className="flex flex-row w-full h-20 flex-wrap gap-3 flex-center">
+                    <input className="w-full border-4 border-black h-16 px-4 text-xl rounded-xl"
+                      placeholder="add google map location"
+                      value={post.location}
+                      onChange={(e) => setPost({...post, location: e.target.value})}
+                    ></input>
+                </div>
+
+                <div className="flex flex-col w-full h-32 gap-3 p-2 border-4 border-black rounded-xl">
+                      <p className="font-bold text-xl text-center">Select date and time</p>
+                      <div className="flex gap-2 flex-row h-full pb-2">
+                        <input className="w-full bbb"
+                          placeholder="select date"
+                          type="date"
+                          value={post.date}
+                          onChange={(e) => setPost({...post, date: e.target.value})}
+                        >
+                        </input>
+                        <div className="flex flex-row w-full justify-center gap-1">
+                          <input className="w-36 bbb h-full"
+                            placeholder="select time"
+                            type="time"
+                            value={post.start_time}
+                            onChange={(e) => setPost({...post, start_time: e.target.value})}
+                          >
+                          </input>
+                          <div className="flex flex-center h-full">
+                            <p className="font-semibold text-3xl">-</p>
+                          </div>
+                          <input className="w-36 bbb h-full"
+                            placeholder="select time"
+                            type="time"
+                            value={post.end_time}
+                            onChange={(e) => setPost({...post, end_time: e.target.value})}
+                          >
+                          </input>
+                        </div>
+                      </div>
+                </div>
               </div>
 
-              <div className="flex flex-row w-full h-40 gap-3 flex-center">
-                    <input className="w-full bbb flex-center h-20"
-                      placeholder="select date"
-                      type="date"
-                      value={post.date}
-                      onChange={(e) => setPost({...post, date: e.target.value})}
-                    >
-                    </input>
-                    <input className="w-full bbb flex-center h-20"
-                      placeholder="select time"
-                      type="time"
-                      value={post.time}
-                      onChange={(e) => setPost({...post, time: e.target.value})}
-                    >
-                    </input>
-              </div>
-
-              <div className="flex flex-col w-full h-full gap-3">
+              <div className="flex flex-col w-full h-40 gap-1 p-3 px-5 rounded_corners border-4 border-black bg-white flex-center">
                   <h1 className="text-4xl font-semibold">Event Color</h1>
-                  <ul className='flex flex-row gap-2 flex-start w-full h-full'>
+                  <ul className='flex flex-row gap-2 w-full h-full justify-between items-center p-2'>
                     <li className="w-16 h-16 rounded-full bg-[#FFFFFF] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#FFFFFF"})}></li>
                     <li className="w-16 h-16 rounded-full bg-[#F1E5CB] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#F1E5CB"})}></li>
                     <li className="w-16 h-16 rounded-full bg-[#EEF9FF] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#EEF9FF"})}></li>
                     <li className="w-16 h-16 rounded-full bg-[#222831] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#222831"})}></li>
                   </ul>
               </div>
+
+              <h1 className="text-2xl text-white text-center">View Drafts</h1>
           </div>
         </div>
         </form>

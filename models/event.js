@@ -21,9 +21,13 @@ const EventSchema = new Schema({
         type: Date,
         required: [true, "set the date"]
     },
-    time: {
+    start_time: {
         type: String,
-        required: [true, "set the time"]
+        required: [true, "set the start time"]
+    },
+    end_time: {
+        type: String,
+        required: [true, "set the end time"]
     },
     location: {
         type:String,

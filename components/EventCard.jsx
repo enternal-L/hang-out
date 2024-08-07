@@ -56,7 +56,7 @@ const EventCard = ({ post, color, handleTagClick, handleEdit, handleDelete, hand
                 </div>
                 <div className="flex flex-row gap-5 flex-center m-3">
                         <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{peopleCount} attending</p>
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.date.split('T')[0]}, {post.time}</p>
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.date.split('T')[0]}, {post.start_time}-{post.end_time}</p>
                 </div>
                 <div className="flex flex-row gap-5 flex-center m-3">
                         <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.location}</p>

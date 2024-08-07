@@ -18,7 +18,8 @@ const Creating = () => {
         description: '',
         location: '',
         date: '',
-        time: '',
+        start_time: '',
+        end_time: '',
         color: ''
     })
 
@@ -26,6 +27,8 @@ const Creating = () => {
         //TODO
         e.preventDefault();
         setSubmitting(true);
+
+        {console.log(post);}
 
         try{
             const response = await fetch("/api/prompt/new", {
@@ -37,7 +40,8 @@ const Creating = () => {
                     description: post.description,
                     location: post.location,
                     date: post.date,
-                    time: post.time,
+                    start_time: post.start_time,
+                    end_time: post.end_time,
                     color: post.color
                 })
             });

@@ -21,7 +21,7 @@ export const GET = async (req, { params }) => {
 
 // PATCH (update)
 export const PATCH = async (request, { params }) => {
-    const { subject, description, media, location, date, time, color } = await request.json();
+    const { subject, description, media, location, date, start_time, end_time, color } = await request.json();
 
     try{
         await connectDB();
@@ -35,7 +35,8 @@ export const PATCH = async (request, { params }) => {
         existingEvent.subject = subject;
         existingEvent.description = description;
         existingEvent.media = media;
-        existingEvent.time = time;
+        existingEvent.start_time = start_time;
+        existingEvent.end_time = end_time;
         existingEvent.date = date;
         existingEvent.location = location;
         existingEvent.color = color;
