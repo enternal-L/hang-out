@@ -13,6 +13,8 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ toggleDropDown, setDropDown ] = useState(false);
   const [ blackLogo, setBlackLogo ] = useState(true);
   const [ colorSelected, setSelected ] = useState(-1);
+  const [ toggleButton, setButton ] = useState(false);
+
   const colorArr = [
     ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
     ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
@@ -30,6 +32,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
       else{
         setMain(colorArr[data.colorIndex][1]);
         setBorder(colorArr[data.colorIndex][0]);
+        setBlackLogo(data.colorIndex < 4 ? false : true);
       }
     }
 
@@ -46,7 +49,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
         });
 
         if(response.ok){
-          console.log("Update successfully");
+          console.log("Updated successfully");
         }
 
     } catch (error) {
@@ -66,7 +69,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
       <div className='flex gap-2 flex-center relative'>
         <Link href="/Home" className='z-[3] pt-8'>
-              <div className='bg-black size-[67px] rounded-full'>
+              <div className='border-black border-[5px] size-[67px] rounded-full bg-white'>
 
               </div>
         </Link>
@@ -78,6 +81,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
           alt='profile'
           onClick={() => {
             setDropDown(!toggleDropDown);
+            setButton(false);
           }}
         />
         {toggleDropDown && (
@@ -90,17 +94,23 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
                         key={index} 
                         left_color={value[0]} 
                         right_color={value[1]} 
-                        setMain={setMain} 
-                        setBorder={setBorder} 
                         selection={index} 
-                        setBlackLogo={setBlackLogo}
                         setSelected = {setSelected}
+                        setButton={setButton}
                     />
                   ))}
                 </ul>
-                {colorSelected >= 0 && <button className='blue_btn' onClick={() => {
+                {toggleButton && <button className='blue_btn' onClick={() => {
+                  
+                  setMain(colorArr[colorSelected][1]);
+                  setBorder(colorArr[colorSelected][0]);
+                  setBlackLogo(colorSelected < 4 ? false : true);
+                  
                   updateColor(colorSelected);
+                  
                   setSelected(-1);
+                  setButton(false);
+
                 }}>Set Color</button>}
               </div>
               <div className='border-t-[3px] border-[#90A6EB] w-full rounded_corners'>
@@ -115,7 +125,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
                 <div className='profile_info'>
                     password
                 </div>
-                <button className='blue_btn'onClick={() => {signOut()}}>
+                <button className='blue_btn w-32'onClick={() => {signOut()}}>
                     Log Out
                 </button>
               </div>

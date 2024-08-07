@@ -9,6 +9,8 @@ const Editing = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const eventId = searchParams.get('id');
+    const [mainColor, setMain] = useState("#90A6EB");
+    const [borderColor, setBorder] = useState("#FFFFFF");
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
@@ -71,13 +73,15 @@ const Editing = () => {
 
     return (
         <>
-            <Nav />
+            <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor}/>
             <Form
-            type="Save"
-            post={post}
-            setPost={setPost}
-            submitting={submitting}
-            handleSubmit={updateEvent}
+              type="Save"
+              post={post}
+              setPost={setPost}
+              submitting={submitting}
+              handleSubmit={updateEvent}
+              mainColor={mainColor}
+              borderColor={borderColor}
             />
         </>
     )

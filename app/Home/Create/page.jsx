@@ -8,6 +8,8 @@ import { useSession } from 'next-auth/react'
 const Creating = () => {
     const router = useRouter();
     const {data: session} = useSession();
+    const [mainColor, setMain] = useState("#90A6EB");
+    const [borderColor, setBorder] = useState("#FFFFFF");
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
@@ -54,13 +56,15 @@ const Creating = () => {
 
     return (
         <>
-            <Nav />
+            <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor}/>
             <Form
-            type="Publish"
-            post={post}
-            setPost={setPost}
-            submitting={submitting}
-            handleSubmit={CreateEvent}
+                type="Publish"
+                post={post}
+                setPost={setPost}
+                submitting={submitting}
+                handleSubmit={CreateEvent}
+                mainColor={mainColor}
+                borderColor={borderColor}
             />
         </>
     )

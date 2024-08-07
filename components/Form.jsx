@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 //form
-const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor }) => {
     return (
-      <section className='w-full h-full max-w-full flex-start flex-row pb-7'>
+      <section className='w-full h-full max-w-full flex-start flex-row pb-7' style={{backgroundColor : borderColor}}>
         <form onSubmit={handleSubmit} className="w-full h-full flex">
-        <div className="custom_color w-full h-full flex-row rounded_corners flex-center mx-11 p-4 gap-7">
+        <div className="w-full h-full flex-row rounded_corners flex-center mx-11 p-4 gap-7" style={{backgroundColor : mainColor}}>
           <div className="w-[55%] h-full bg-[#F1E5CB] rounded_corners flex-center flex-col gap-4 p-8">
             <textarea 
                   value={post.subject}
