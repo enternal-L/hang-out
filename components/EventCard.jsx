@@ -15,13 +15,15 @@ const EventCard = ({ post, color, handleTagClick, handleEdit, handleDelete, hand
             <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative z-[1]`}>
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
-                        <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-6'>
-                            <p>Share</p>
-                            <Image src = "/pen-square.svg" alt="edit" width = {50} height = {50}
+                        <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
+                            {/* <Image src = "/share.svg" alt="share" width = {33} height = {33}
+                            className="object-contain cursor-pointer" onClick={() => {}}/> */}
+                            <Link href="/Home/Share">share</Link>
+                            <Image src = "/pen-square.svg" alt="edit" width = {40} height = {40}
                             className="object-contain cursor-pointer" onClick={handleEdit}/>
                             <p>Archive</p>
                             <p>Star</p>
-                            <Image src = "/trashcan.svg" alt="delete" width = {50} height = {50} 
+                            <Image src = "/trashcan.svg" alt="delete" width = {40} height = {40} 
                             className="object-contain cursor-pointer" onClick={handleDelete}/>
                         </div>
                     </div>

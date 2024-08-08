@@ -92,16 +92,21 @@ const SignUp = () => {
     <div className="w-full h-full flex-center flex-row bg-white">
       <div className="w-[30%] flex-center self-end">
           <Image src = "/bird.PNG"
-                      width = {450} 
-                      height = {450}
+                      width = {500} 
+                      height = {500}
                       className="object-contain"/>
       </div>
       <div className="w-[40%] flex flex-col gap-2 flex-center">
+        <Image src = "/IMG_6926.PNG"
+                width = {1050}
+                height = {1050}
+                className="object-contain absolute w-full h-full"
+              />
         <Image src = "/splash-blue.png"
-                  width = {470} 
-                  height = {470}
+                  width = {520} 
+                  height = {520}
                   className="object-contain"/>
-        <nav className="flex flex-col custom_color rounded-3xl w-[70%] gap-4 py-5 drop-shadow-2xl px-16 flex-center">
+        <nav className="flex flex-col custom_color rounded-3xl w-[70%] gap-3 py-16 drop-shadow-2xl px-20 flex-center relative">
           <input
                   type = "text"
                   placeholder='Username'
@@ -109,24 +114,35 @@ const SignUp = () => {
                   required
                   className='form_input outline-none bg-white'
           />
-          <input
-                  type = {(showPass) ? ("") : ("password")}
-                  placeholder='Password'
-                  onChange={(e) => {setPassword(e.target.value)}}
-                  required
-                  className='form_input outline-none bg-white'
-          />
+          <div className="w-full flex items-center">
+            <input
+              type={showPass ? "" : "password"}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="password_input outline-none bg-white h-14 px-3 "
+            />
+            <div 
+              className="flex flex-center bg-white h-14 px-4 rounded-r-lg cursor-pointer"
+              onClick={() => setShow(!showPass)}
+            >
+              <Image 
+                src={showPass ? "/eye-open.svg" : "/eye-close.svg"}
+                width={25} 
+                height={25}
+                className="object-contain"
+              />
+            </div>
+          </div>
 
-          <span className="flex flex-row gap-2 items-center self-start"><input className="size-5"type="checkbox" onChange={() => {setShow(!showPass)}}></input>Show Password</span>
-
-          <div className="w-full flex flex-row flex-center gap-3">
-                <button type = "submit" onClick={handleSignIn} className="white_btn text-base mt-4 w-full min-h-6">
+          <div className="w-full flex flex-row flex-center gap-2 px-2">
+                <button type = "submit" onClick={handleSignIn} className="white_btn text-base w-full min-h-6">
                     Sign In
                 </button>
 
                 {/* when phone screen break these two into rows */}
 
-                <button type = "submit" onClick={handleSignUp} className="white_btn text-base mt-4 w-full min-h-6">
+                <button type = "submit" onClick={handleSignUp} className="white_btn text-base w-full min-h-6">
                     Sign Up
                 </button>
           </div>
@@ -134,8 +150,8 @@ const SignUp = () => {
       </div>
       <div className="w-[30%] flex-center self-start">
           <Image src = "/mailman.PNG"
-          width = {455} 
-          height = {455}
+          width = {550} 
+          height = {550}
           className="object-contain"/>
         </div>
     </div>

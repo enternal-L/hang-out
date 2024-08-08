@@ -36,7 +36,7 @@ input {
 }
 
 .white_btn{
-  @apply rounded-full border-2 border-[#90A6EB] bg-white py-1.5 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white hover:border-white text-center text-base font-semibold font-inter flex items-center justify-center;
+  @apply rounded-full border-2 border-[#90A6EB] bg-white py-2 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white hover:border-white text-center text-base font-semibold font-inter flex items-center justify-center;
 }
 
 .outline_btn {
@@ -90,7 +90,11 @@ input {
 }
 
 .form_input {
-  @apply w-full flex font-semibold rounded-md border-[2px] border-[#90A6EB] mt-2 p-3 text-lg bg-white;
+  @apply w-full flex font-semibold rounded-lg border-2 p-3 text-lg bg-white outline-none;
+}
+
+.password_input {
+  @apply w-full flex font-semibold rounded-l-lg border-2 p-4 text-lg bg-white outline-none;
 }
 
 /* Nav Component */
