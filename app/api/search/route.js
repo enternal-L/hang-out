@@ -3,13 +3,13 @@ import User from "@models/user";
 
 //our req needs to be onChange input which searches user on the database
 
-export const SearchUser = async(req) => {
+export const POST = async(req, res) => {
     try {
         await connectDB();
 
-        const { query } = req.query;
+        const { query } = await req.json();
 
-        const users = User.find({
+        const users = await User.find({
             username: { $regex: query, $options: 'i' }, // case-insensitive search
         }) //no limit on searches
 

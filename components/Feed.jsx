@@ -8,9 +8,11 @@ import { useSession } from 'next-auth/react';
 const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
 
     const [toggleStates, setToggles] = useState([]);
+    const [shareEvent, setShare] = useState([]);
 
     useEffect(() => {
         setToggles(Array(data.length).fill(false));
+        setShare(Array(data.length).fill(false));
     }, [data]);
 
     const toggleDropDown = (id) => {
@@ -24,10 +26,22 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
       setToggles(copied);
     }
 
+    const toggleShare = (id) => {
+      if(!shareEvent){
+        return;
+      }
+
+      const copied = [...shareEvent];
+      copied[id] = !copied[id];
+
+      setShare(copied); 
+    }
+
     return (
       <div className="flex flex-wrap gap-7 size-full justify-center">
           {toggleStates.length > 0 && data.map((post, index) => (
               <EventCard 
+                index = {index}
                 key = {post._id}
                 post = {post}
                 color={post.color}
@@ -36,6 +50,8 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
                 handleDelete={() => {handleDelete(post)}}
                 handleDropdown={() => {toggleDropDown(index)}}
                 dropDown = {toggleStates[index]}
+                share = {shareEvent[index]}
+                handleShare={() => {toggleShare(index)}}
               />
           ))}
       </div>

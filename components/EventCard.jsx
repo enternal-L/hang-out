@@ -5,20 +5,22 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import Share from "./Share";
 
-const EventCard = ({ post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown }) => {
+const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown, share, handleShare }) => {
 
     const router = useRouter();
     const peopleCount = 0;
 
     return (
+        <>
+            {share && <Share event = {post} setShare={handleShare}/>}
             <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative z-[1]`}>
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
-                            {/* <Image src = "/share.svg" alt="share" width = {33} height = {33}
-                            className="object-contain cursor-pointer" onClick={() => {}}/> */}
-                            <Link href="/Home/Share">share</Link>
+                            <Image src = "/share.svg" alt="share" width = {33} height = {33}
+                            className="object-contain cursor-pointer" onClick={handleShare}/>
                             <Image src = "/pen-square.svg" alt="edit" width = {40} height = {40}
                             className="object-contain cursor-pointer" onClick={handleEdit}/>
                             <p>Archive</p>
@@ -64,6 +66,7 @@ const EventCard = ({ post, color, handleTagClick, handleEdit, handleDelete, hand
                         <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.location}</p>
                 </div>
             </div>
+        </>
     )
 }
 

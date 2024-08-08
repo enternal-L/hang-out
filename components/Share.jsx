@@ -1,41 +1,81 @@
 "use client"
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 
-const Share = ({title}) => {
+const Share = ({event, setShare}) => {
 
     const [userArr, setArr] = useState([]);
-    const [search, setSearch] = useState("");
+    const [access, setAccess] = useState([]);
+    const [query, setQuery] = useState("");
+    const [search, setSearch] = useState(false);
 
-    const fetchUsers = async() => {
-        const response = await fetch('/api/search');
-        const data = await response.json();
+    useEffect(() => {
+        const fetchUsers = async() => {
+            const response = await fetch(`/api/search`, {
+                method: "POST",
+                body: JSON.stringify({
+                    query
+                })
+            });
 
-        
+            const data = await response.json();
 
-        setPosts(filteredData);
-    }
+            setArr(data);
+        }
+
+        const fetchAdded = async() => {
+            const response = ""
+        }
+
+        fetchUsers();
+    }, [query])
 
     return (
         <>
-            <div className="bg-black w-full h-full flex flex-center">
+            <div className="bg-black w-full h-full flex flex-center absolute z-10 top-0" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                 <div className="bg-white w-96 h-fit flex flex-col rounded-xl p-5 gap-3">
-                    <h1 className="font-semi-bold text-3xl">Share "Event1"</h1>
-                    <input placeholder="Invite People" className="border border-black w-full h-10 p-4 rounded-sm outline-none" onChange={(e) => {setSearch(e.target.value)}}>
-                    </input>
-                    <h1 className="font-semibold text-xl">People with access</h1>
+                    <h1 className="font-semibold text-2xl">Share "{event.subject}"</h1>
+                    <div className="w-full relative">
+                        <div className="flex flex-row">
+                            <input placeholder="Invite People" className="border border-r-0 border-black w-full h-10 p-4 rounded-l-sm outline-none" value = {query} onChange={(e) => {setQuery(e.target.value); setSearch(true);}}></input>
+                            <div className="border border-black border-l-0 flex-center p-4 h-10">
+                                <Image className="cursor-pointer"
+                                    width={13}
+                                    height={13}
+                                    src = "/cross.svg"
+                                    onClick={() => {
+                                        setSearch(false);
+                                        setQuery("");
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        {search &&
+                            <div className="bg-white w-full absolute h-fit flex flex-col">
+                                {userArr.length > 0 && userArr.map((user, index) => (
+                                    <div key = {index} className="flex flex-row gap-2 p-2 px-2 cursor-pointer hover:bg-slate-100" onClick={() => {setSearch(false)}}>
+                                        <p>Image</p>
+                                        <p className="text-base">{user.username}</p>
+                                    </div>
+                                )
+                                )}
+                            </div>
+                        }
+                    </div>
+                    <h1 className="font-semibold text-lg">People with access</h1>
                     <div className="flex flex-col gap-3">
-                        {userArr.length > 0 && userArr.map((user, index) => (
+                        {access.length > 0 && access.map((user, index) => (
                             <div key = {index} className="flex flex-row gap-2">
                                 <p>Image</p>
-                                <p className="text-base">{user}</p>
+                                <p className="text-base">{user.username}</p>
                             </div>
-                            )
+                        )
                         )}
                     </div>
                     <div className="w-full h-11 flex flex-row justify-between">
                         <button className="blue_btn">Copy link</button>
-                        <button className="blue_btn">Done</button>
+                        <button className="blue_btn" onClick={setShare}>Done</button>
                     </div>
                 </div>
             </div>
