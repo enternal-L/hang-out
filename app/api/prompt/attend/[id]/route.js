@@ -1,4 +1,5 @@
 import Event from "@models/event";
+import User from "@models/user";
 import { connectDB } from "@utils/mongodb";
 
 const searchExist = (event, user) => {
@@ -12,15 +13,21 @@ export const PATCH = async(req, { params }) => {
         const { user, answer } = await req.json();
 
         const event = await Event.findById(params.id);
+        const invited_user = await User.findById(user);
 
         if(!event.attendees){
             event.attendees = [];
+        }
+
+        if(!!invited_user.invites){
+            invited_user.invites = [];
         }
 
         if(searchExist(event, user)){
             return new Response("User already invited", {status : 200});
         }
 
+        invited_user.invites.push(event);
         event.attendees.push({user, answer});
 
         await event.save();

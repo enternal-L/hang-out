@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
+import Dropdown from './Dropdown';
 
 const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
@@ -14,6 +15,9 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ blackLogo, setBlackLogo ] = useState(true);
   const [ colorSelected, setSelected ] = useState(-1);
   const [ toggleButton, setButton ] = useState(false);
+  const [ invites, setInvites ] = useState([]);
+  const [ notifBar, setNotif ] = useState(false);
+  const [ menuBar, setMenu ] = useState(false);
 
   const colorArr = [
     ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
@@ -36,7 +40,10 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
       }
     }
 
-    if(userId) getColor();
+    if(userId){
+      getColor();
+      // getInvites(userId);
+    }
   }, [userId]);
 
   const updateColor = async(index) => {
@@ -57,6 +64,41 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
     }
   };
 
+  const getInvites = async(id) => {
+      try{
+          const response = await fetch(`/api/user/${id}`, {
+            method: "GET"
+          })
+
+          const data = await response.json();
+
+          if(data){
+            setInvites(data);
+          }
+      }catch(error){
+        console.log(error, "error");
+      }
+  }
+
+  const handleTabs = (main, setMain, sub, setSub) => {
+      if(main){
+        setDropDown(false);
+        setMain(false);
+        setSub(false);
+        setButton(false);
+      }
+
+      else if(sub){
+        setMain(true);
+        setSub(false);
+      }
+
+      else{
+        setDropDown(true);
+        setMain(true);
+      }
+  }
+
   return (
     <nav className={`flex-between w-full py-5 pl-20 pr-16`} style={{ backgroundColor: borderColor }}>
       <Link href="/Home" className='flex flex-center'>
@@ -69,8 +111,10 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
       <div className='flex gap-2 flex-center relative'>
         <Link href="/Home" className='z-[3] pt-8'>
-              <div className='border-black border-[5px] size-[67px] rounded-full bg-white'>
-
+              <div className='border-black border-[5px] size-[67px] rounded-full' 
+                style = {{backgroundColor : notifBar ? 'black' : 'white'}}
+                onClick={() => {
+                    handleTabs(notifBar, setNotif, menuBar, setMenu);}}>
               </div>
         </Link>
         <Image
@@ -79,58 +123,71 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
           height={67}
           className='rounded-full border-black border-[5px] cursor-pointer z-[3] mr-5 mt-8'
           alt='profile'
+          style = {{borderColor : !menuBar ? 'black' : "#90A6EB"}}
           onClick={() => {
-            setDropDown(!toggleDropDown);
-            setButton(false);
+              handleTabs(menuBar, setMenu, notifBar, setNotif);
           }}
         />
         {toggleDropDown && (
-          <div className='dropdown flex-center shadow-xl z-[2]'>
-              <div className='flex flex-col pb-2 flex-center gap-2'>
-                <h1 className='text-2xl font-bold pt-20 px-4'>Theme</h1>
-                <ul className='flex flex-wrap gap-2 flex-center'>
-                  {colorArr.map((value, index) => (
-                    <Halfsquare 
-                        key={index} 
-                        left_color={value[0]} 
-                        right_color={value[1]} 
-                        selection={index} 
-                        setSelected = {setSelected}
-                        setButton={setButton}
-                    />
-                  ))}
-                </ul>
-                {toggleButton && <button className='blue_btn' onClick={() => {
-                  
-                  setMain(colorArr[colorSelected][1]);
-                  setBorder(colorArr[colorSelected][0]);
-                  setBlackLogo(colorSelected < 4 ? false : true);
-                  
-                  updateColor(colorSelected);
-                  
-                  setSelected(-1);
-                  setButton(false);
+            <div className='dropdown flex-center shadow-xl z-[2]'>
+                  <div className='flex flex-col pb-2 flex-center gap-2'>
+                    <h1 className='text-2xl font-bold pt-20 px-4'>{notifBar ? "Notifications" : "Themes"}</h1>
+                    {menuBar ? ( 
+                          <>
+                          <ul className='flex flex-wrap gap-2 flex-center'>
+                              {colorArr.map((value, index) => (
+                                <Halfsquare 
+                                    key={index} 
+                                    left_color={value[0]} 
+                                    right_color={value[1]} 
+                                    selection={index} 
+                                    setSelected = {setSelected}
+                                    setButton={setButton}
+                                />
+                              ))}
+                          </ul>
+                          {toggleButton && <button className='blue_btn' onClick={() => {
+                            
+                            setMain(colorArr[colorSelected][1]);
+                            setBorder(colorArr[colorSelected][0]);
+                            setBlackLogo(colorSelected < 4 ? false : true);
+                            
+                            updateColor(colorSelected);
+                            
+                            setSelected(-1);
+                            setButton(false);
 
-                }}>Set Color</button>}
-              </div>
-              <div className='border-t-[3px] border-[#90A6EB] w-full rounded_corners'>
+                          }}>Set Color</button>}
+                        </>
+                    ) :   
+                        <div className='flex flex-col'>
+                          <div>
+                            
+                          </div>
+                        </div>
+                    }
+                  </div>
+                  {menuBar && (
+                    <>
+                      <div className='border-t-[3px] border-[#90A6EB] w-full rounded_corners'>
 
-              </div>
+                      </div>
 
-              <div className='flex flex-center flex-col gap-2 mt-2 mb-20'>
-                <h1 className='text-2xl font-bold'>Account</h1>
-                <div className='profile_info'>
-                    {session?.user?.name ? session?.user?.name : "loading..."}
-                </div>
-                <div className='profile_info'>
-                    password
-                </div>
-                <button className='blue_btn w-32'onClick={() => {signOut()}}>
-                    Log Out
-                </button>
-              </div>
-          </div>
-        )}
+                      <div className='flex flex-center flex-col gap-2 mt-2 mb-20'>
+                        <h1 className='text-2xl font-bold'>Account</h1>
+                        <div className='profile_info'>
+                            {session?.user?.name ? session?.user?.name : "loading..."}
+                        </div>
+                        <div className='profile_info'>
+                            password
+                        </div>
+                        <button className='blue_btn w-32'onClick={() => {signOut()}}>
+                            Log Out
+                        </button>
+                      </div>
+                    </>
+                  )}
+              </div>)}
       </div>
     </nav>
   )

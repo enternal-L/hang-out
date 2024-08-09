@@ -18,7 +18,17 @@ const userSchema = new Schema({
     colorIndex: {
         type: Number,
         default: 5
+    },
+    invites: {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Event"
+            }
+        ],
+        default: []
     }
+
 }, { timestamps: true });
 
 const User = models.User || mongoose.model("User", userSchema);
