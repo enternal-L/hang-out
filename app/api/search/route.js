@@ -1,5 +1,6 @@
 import { connectDB } from "@utils/mongodb";
 import User from "@models/user";
+import Event from "@models/event";
 
 //our req needs to be onChange input which searches user on the database
 

@@ -11,25 +11,55 @@ const Share = ({event, setShare}) => {
     const [search, setSearch] = useState(false);
 
     useEffect(() => {
-        const fetchUsers = async() => {
-            const response = await fetch(`/api/search`, {
-                method: "POST",
-                body: JSON.stringify({
-                    query
-                })
-            });
-
-            const data = await response.json();
-
-            setArr(data);
-        }
-
-        const fetchAdded = async() => {
-            const response = ""
-        }
-
         fetchUsers();
+        fetchAdded();
     }, [query])
+
+    const handleAttending = async(user, answer) => {
+        try{
+            const response = await fetch(`/api/prompt/attend/${event._id.toString
+                ()}`, {
+                  method: "PATCH",
+                  body: JSON.stringify({ user, answer })
+                });
+
+            const text = await response.text();
+
+            if(response.ok){
+                alert(text);
+                fetchUsers();
+                return;
+            }
+
+        } catch(error){
+            console.log("Error Occured", error);
+        }
+    }
+
+    const fetchUsers = async() => {
+        const response = await fetch(`/api/search`, {
+            method: "POST",
+            body: JSON.stringify({
+                query
+            })
+        });
+
+        const data = await response.json();
+
+        setArr(data);
+    }
+
+    const fetchAdded = async() => {
+        const response = await fetch(`/api/prompt/${event._id.toString()}`, {
+            method: "GET"
+        })
+
+        const data = await response.json();
+
+        console.log(data);
+
+        setAccess(data.attendees);
+    }
 
     return (
         <>
@@ -54,7 +84,11 @@ const Share = ({event, setShare}) => {
                         {search &&
                             <div className="bg-white w-full absolute h-fit flex flex-col">
                                 {userArr.length > 0 && userArr.map((user, index) => (
-                                    <div key = {index} className="flex flex-row gap-2 p-2 px-2 cursor-pointer hover:bg-slate-100" onClick={() => {setSearch(false)}}>
+                                    <div key = {index} className="flex flex-row gap-2 p-2 px-2 cursor-pointer hover:bg-slate-100" onClick={() => {                                  
+                                        if(confirm(`Do you want to invite, ${user.username}?`)){
+                                            setSearch(false);
+                                            handleAttending(user, "pending");
+                                        }}}>
                                         <p>Image</p>
                                         <p className="text-base">{user.username}</p>
                                     </div>
@@ -65,10 +99,17 @@ const Share = ({event, setShare}) => {
                     </div>
                     <h1 className="font-semibold text-lg">People with access</h1>
                     <div className="flex flex-col gap-3">
-                        {access.length > 0 && access.map((user, index) => (
+                        {access.length > 0 && access.map((obj, index) => (
                             <div key = {index} className="flex flex-row gap-2">
                                 <p>Image</p>
-                                <p className="text-base">{user.username}</p>
+                                <p className="text-base">{obj.user.username}</p>
+                                { obj.answer === "pending" ? <p>pending...</p> : 
+                                    <div>
+                                        <button>yes</button>
+                                        <button>maybe</button>
+                                        <button>no</button>
+                                    </div>
+                                }
                             </div>
                         )
                         )}

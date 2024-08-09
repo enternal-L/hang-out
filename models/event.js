@@ -36,6 +36,19 @@ const EventSchema = new Schema({
     color: {
         type:String,
         required: [true, "set the color"]
+    },
+    attendees : {
+        type:[ {
+            user : {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            },
+            answer : {
+                type: "String",
+                required: [true, "Status is required"]
+            }
+        } ],
+        required: [false, "set attendees"]
     }
 });
 

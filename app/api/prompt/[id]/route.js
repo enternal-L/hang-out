@@ -7,7 +7,7 @@ export const GET = async (req, { params }) => {
     try{
         await connectDB();
 
-        const events = await Event.findById(params.id).populate('creator');
+        const events = await Event.findById(params.id).populate('creator').populate('attendees.user');
 
         if(!events){
             return new Response("Event not found", { status : 404 });
