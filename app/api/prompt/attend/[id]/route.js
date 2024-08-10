@@ -15,6 +15,10 @@ export const PATCH = async(req, { params }) => {
         const event = await Event.findById(params.id);
         const invited_user = await User.findById(user);
 
+        console.log("Invited User: ", invited_user);
+        console.log("This Event: ", event);
+        console.log("User Invites: ", invited_user.invites)
+
         if(!event.attendees){
             event.attendees = [];
         }
@@ -30,7 +34,9 @@ export const PATCH = async(req, { params }) => {
         invited_user.invites.push(event);
         event.attendees.push({user, answer});
 
+        //dont forget to save
         await event.save();
+        await invited_user.save();
 
         return new Response(`${user.username} invited`, {status : 200});
     }catch(error){

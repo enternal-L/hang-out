@@ -42,7 +42,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
     if(userId){
       getColor();
-      // getInvites(userId);
+      getInvites(userId);
     }
   }, [userId]);
 
@@ -73,7 +73,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
           const data = await response.json();
 
           if(data){
-            setInvites(data);
+            setInvites(data.invites);
           }
       }catch(error){
         console.log(error, "error");
@@ -160,9 +160,30 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
                           }}>Set Color</button>}
                         </>
                     ) :   
-                        <div className='flex flex-col'>
-                          <div>
-                            
+                        <div className='flex flex-center h-fit w-full'>
+                          <div className='flex-col'>
+                              {invites.length > 0 && invites.map((item, index) => (
+                                <div className='border-b-4 border-[#90A6EB] flex flex-col gap-2 pb-4' key = {index}>
+                                    <div className='flex flex-col'>
+                                      <h1 className='text-base font-semibold'>username</h1>
+                                      <p>Invited you to join {item.subject}</p>
+                                      <p>{item.description}...</p>
+                                    </div>
+                                    <div className='flex flex-col gap-2 mb-1'>
+                                        <div className='flex flex-row gap-2 h-8 flex-center text-center'>
+                                          <p className='text-white text-lg rounded-lg bg-[#FFB800] w-full p-1'>{item.date.split('T')[0]}</p>
+                                          <p className='text-white text-lg rounded-lg bg-[#FFB800] w-full p-1' >{item.start_time}-{item.end_time}</p>
+                                        </div>
+                                        <div className='text-white text-lg rounded-lg bg-[#FFB800] w-full flex-center h-8'>
+                                            <p>@ {item.location}</p>
+                                        </div>
+                                    </div>
+                                    <div className='flex flex-row flex-center'>
+                                      <button className='blue_btn w-full'>accept</button>
+                                      <button className='blue_btn w-full'>decline</button>
+                                    </div>
+                                </div>
+                              ))}
                           </div>
                         </div>
                     }

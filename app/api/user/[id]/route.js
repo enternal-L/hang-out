@@ -5,7 +5,7 @@ export const GET = async (req, { params }) => {
     try{
         await connectDB();
 
-        const user = await User.findById(params.id);
+        const user = await User.findById(params.id).populate('invites');
 
         if(!user){
             return new Response("User not found", { status : 404 });
