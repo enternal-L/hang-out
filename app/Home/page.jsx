@@ -2,13 +2,25 @@
 
 import Feed from "@components/Feed";
 import Nav from "@components/Nav";
+import colorArr from "@components/Nav";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 const Home = () => {
+
+
+
   const [mainColor, setMain] = useState("#90A6EB");
   const [borderColor, setBorder] = useState("#FFFFFF");
+
+  const savedColor = localStorage.getItem("saved-theme");
+  const parsedSavedColor = JSON.parse(savedColor);
+
+  if (parsedSavedColor){
+    setMain(colorArr[parsedSavedColor.colorIndex][1]);
+    setBorder(colorArr[parsedSavedColor.colorIndex][0]);
+  }
 
   return (
     <>

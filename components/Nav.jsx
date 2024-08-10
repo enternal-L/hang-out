@@ -7,6 +7,11 @@ import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
 import Dropdown from './Dropdown';
 
+const colorArr = [
+  ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
+  ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
+]; //border color and main color
+
 const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
   const { data: session } = useSession();
@@ -19,24 +24,19 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ notifBar, setNotif ] = useState(false);
   const [ menuBar, setMenu ] = useState(false);
 
-  const colorArr = [
-    ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
-    ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
-  ] //border color and main color
-
   useEffect(() => {
-    const getColor = async() => {
-      const response = await fetch(`/api/user/${userId}`);
-      const data = await response.json();
+    const getColor = () => {
+      const savedColor = localStorage.getItem("saved-theme");
+      const parsedSavedColor = JSON.parse(savedColor);
 
-      if(!data.colorIndex){
+      if(!parsedSavedColor){
         updateColor(5);
       }
 
       else{
-        setMain(colorArr[data.colorIndex][1]);
-        setBorder(colorArr[data.colorIndex][0]);
-        setBlackLogo(data.colorIndex < 4 ? false : true);
+        setMain(colorArr[parsedSavedColor.colorIndex][1]);
+        setBorder(colorArr[parsedSavedColor.colorIndex][0]);
+        setBlackLogo(parsedSavedColor.colorIndex < 4 ? false : true);
       }
     }
 
@@ -46,19 +46,10 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
     }
   }, [userId]);
 
-  const updateColor = async(index) => {
+  const updateColor = (index) => {
     try {
-        const response = await fetch(`/api/user/${userId}`, {
-          method: "PATCH",
-          body: JSON.stringify({
-              ind: index
-            })
-        });
-
-        if(response.ok){
-          console.log("Updated successfully");
-        }
-
+        const colorSave = JSON.stringify({colorIndex: index});
+        localStorage.setItem("saved-theme", colorSave)
     } catch (error) {
         console.log("Error occured" , error);
     }
