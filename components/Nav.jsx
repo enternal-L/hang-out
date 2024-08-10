@@ -7,11 +7,6 @@ import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
 import Dropdown from './Dropdown';
 
-const colorArr = [
-  ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
-  ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
-]; //border color and main color
-
 const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
 
   const { data: session } = useSession();
@@ -23,6 +18,11 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ invites, setInvites ] = useState([]);
   const [ notifBar, setNotif ] = useState(false);
   const [ menuBar, setMenu ] = useState(false);
+
+  const colorArr = [
+    ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
+    ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
+  ]; //border color and main color
 
   useEffect(() => {
     const getColor = () => {
@@ -40,8 +40,9 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
       }
     }
 
+    getColor();
+
     if(userId){
-      getColor();
       getInvites(userId);
     }
   }, [userId]);
