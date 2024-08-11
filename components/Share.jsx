@@ -86,8 +86,8 @@ const Share = ({event, setShare}) => {
                                 {userArr.length > 0 && userArr.map((user, index) => (
                                     <div key = {index} className="flex flex-row gap-2 p-2 px-2 cursor-pointer hover:bg-slate-100" onClick={() => {                                  
                                         if(confirm(`Do you want to invite, ${user.username}?`)){
+                                            handleAttending(user._id, "pending");
                                             setSearch(false);
-                                            handleAttending(user, "pending");
                                         }}}>
                                         <p>Image</p>
                                         <p className="text-base">{user.username}</p>
@@ -105,9 +105,7 @@ const Share = ({event, setShare}) => {
                                 <p className="text-base">{obj.user.username}</p>
                                 { obj.answer === "pending" ? <p>pending...</p> : 
                                     <div>
-                                        <button>yes</button>
-                                        <button>maybe</button>
-                                        <button>no</button>
+                                        <p>{obj.answer}</p>
                                     </div>
                                 }
                             </div>

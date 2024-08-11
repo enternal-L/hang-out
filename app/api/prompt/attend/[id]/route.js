@@ -3,7 +3,15 @@ import User from "@models/user";
 import { connectDB } from "@utils/mongodb";
 
 const searchExist = (event, user) => {
-    return event.attendees.some(search => user._id == search.user._id); //some is like c++'s findif and the inside is a lambda function
+    for(let i = 0; i < event.attendees.length; ++i){
+        if(user == event.attendees[i].user){
+            return i;
+        }
+    }
+
+    return -1;
+
+    // return event.attendees.findIndex(search => user._id == search.user._id); //some is like c++'s findif and the inside is a lambda function
 };
 
 export const PATCH = async(req, { params }) => {
@@ -15,19 +23,22 @@ export const PATCH = async(req, { params }) => {
         const event = await Event.findById(params.id);
         const invited_user = await User.findById(user);
 
-        console.log("Invited User: ", invited_user);
-        console.log("This Event: ", event);
-        console.log("User Invites: ", invited_user.invites)
-
         if(!event.attendees){
             event.attendees = [];
         }
 
-        if(!!invited_user.invites){
+        if(!invited_user.invites){
             invited_user.invites = [];
         }
 
-        if(searchExist(event, user)){
+        const index = searchExist(event, user);
+
+        if(index != -1){
+            if(answer != "pending"){
+                event.attendees[index].answer = answer;
+                await event.save();
+            }
+
             return new Response("User already invited", {status : 200});
         }
 
@@ -38,7 +49,7 @@ export const PATCH = async(req, { params }) => {
         await event.save();
         await invited_user.save();
 
-        return new Response(`${user.username} invited`, {status : 200});
+        return new Response(`${invited_user.username} invited`, {status : 200});
     }catch(error){
         return new Response("Failed to fetch searched users", {status : 500});
     }

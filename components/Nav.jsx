@@ -18,6 +18,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ invites, setInvites ] = useState([]);
   const [ notifBar, setNotif ] = useState(false);
   const [ menuBar, setMenu ] = useState(false);
+  const [ selected, isSelected ] = useState(false);
 
   const colorArr = [
     ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
@@ -97,6 +98,22 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
         setDropDown(true);
         setMain(true);
       }
+  }
+
+  const handleResponse = async(user, answer, eventId) => {
+    try{
+      const response = await fetch(`/api/prompt/attend/${eventId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ user, answer })
+      });
+
+      if(response.ok){
+        alert("Updated succesfully")
+      }
+
+    }catch(error){
+      console.log(error, "Error");
+    }
   }
 
   return (
@@ -179,11 +196,17 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
                                         </div>
                                     </div>
                                     <div className='flex flex-row flex-center'>
-                                      <button className='blue_btn w-full'>accept</button>
-                                      <button className='blue_btn w-full'>decline</button>
+                                      <button className='green_btn w-full' onClick={() => {handleResponse(userId, "yes", item._id)}}>yes</button>
+                                      <button className='yellow_btn w-full' onClick={() => {handleResponse(userId, "maybe", item._id)}}>maybe</button>
+                                      <button className='red_btn w-full' onClick={() => {handleResponse(userId, "no", item._id)}}>no</button>
                                     </div>
                                 </div>
                               ))}
+                              {invites.length == 0 && 
+                                <div>
+                                  <h1>No new Notifications</h1>
+                                </div>
+                              }
                           </div>
                         </div>
                     }

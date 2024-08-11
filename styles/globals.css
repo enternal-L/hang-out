@@ -35,6 +35,18 @@ input {
   @apply rounded-full border-2 border-white bg-[#90A6EB] py-1.5 px-5 text-white transition-all hover:bg-white hover:text-[#90A6EB] hover:border-[#90A6EB] text-center text-base font-semibold font-inter flex items-center justify-center;
 }
 
+.green_btn {
+  @apply rounded-full border-2 border-white bg-[#B7E5B4] py-1.5 px-5 text-white transition-all hover:bg-white hover:text-[#B7E5B4] hover:border-[#B7E5B4] text-center text-base font-semibold font-inter flex items-center justify-center;
+}
+
+.yellow_btn {
+  @apply rounded-full border-2 border-white bg-[#e6e22e] py-1.5 px-5 text-white transition-all hover:bg-white hover:text-[#e6e22e] hover:border-[#e6e22e] text-center text-base font-semibold font-inter flex items-center justify-center;
+}
+
+.red_btn {
+  @apply rounded-full border-2 border-white bg-[#F28585] py-1.5 px-5 text-white transition-all hover:bg-white hover:text-[#F28585] hover:border-[#F28585] text-center text-base font-semibold font-inter flex items-center justify-center;
+}
+
 .white_btn{
   @apply rounded-full border-2 border-[#90A6EB] bg-white py-2 px-5 text-[#90A6EB] transition-all hover:bg-[#90A6EB] hover:text-white hover:border-white text-center text-base font-semibold font-inter flex items-center justify-center;
 }

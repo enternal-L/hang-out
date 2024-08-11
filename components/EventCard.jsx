@@ -11,7 +11,7 @@ import { connectDB } from "@utils/mongodb";
 const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown, share, handleShare }) => {
 
     const router = useRouter();
-    const peopleCount = 0;
+    const peopleCount = post.attendees.filter(element => element.answer == "yes").length;
 
     return (
         <>

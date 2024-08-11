@@ -24,13 +24,13 @@ const Creating = () => {
     })
 
     const CreateEvent = async (e) => {
-        //TODO
         e.preventDefault();
         setSubmitting(true);
 
-        {console.log(post);}
-
         try{
+
+            console.log(session?.user.id);
+
             const response = await fetch("/api/prompt/new", {
                 method: "POST",
                 body: JSON.stringify({
