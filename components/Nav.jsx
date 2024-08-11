@@ -7,12 +7,16 @@ import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
 import Dropdown from './Dropdown';
 
-const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
+export const colorArr = [
+  ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
+  ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
+]; //border color and main color
+
+const Nav = ({setMain, mainColor, setBorder, borderColor, setBlackLogo, blackLogo}) => {
 
   const { data: session } = useSession();
   const userId = session?.user.id;
   const [ toggleDropDown, setDropDown ] = useState(false);
-  const [ blackLogo, setBlackLogo ] = useState(true);
   const [ colorSelected, setSelected ] = useState(-1);
   const [ toggleButton, setButton ] = useState(false);
   const [ invites, setInvites ] = useState([]);
@@ -20,46 +24,34 @@ const Nav = ({setMain, mainColor, setBorder, borderColor}) => {
   const [ menuBar, setMenu ] = useState(false);
   const [ selected, isSelected ] = useState(false);
 
-  const colorArr = [
-    ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
-    ["#F1E5CB", "#467264"], ["#FFFFFF", "#90A6EB"] , ["#F1E5CB", "#F28166"], ["#FFFFFF", "#222831"] //black logos
-  ] //border color and main color
+
+  const getColor = () => {
+    const savedColor = localStorage.getItem("saved-theme");
+    const parsedSavedColor = JSON.parse(savedColor);
+  
+    if(!parsedSavedColor){
+      updateColor(5);
+    }
+  
+    else{
+      setMain(colorArr[parsedSavedColor.colorIndex][1]);
+      setBorder(colorArr[parsedSavedColor.colorIndex][0]);
+      setBlackLogo(parsedSavedColor.colorIndex < 4 ? false : true);
+    }
+  }
 
   useEffect(() => {
-    const getColor = async() => {
-      const response = await fetch(`/api/user/${userId}`);
-      const data = await response.json();
-
-      if(!data.colorIndex){
-        updateColor(5);
-      }
-
-      else{
-        setMain(colorArr[data.colorIndex][1]);
-        setBorder(colorArr[data.colorIndex][0]);
-        setBlackLogo(data.colorIndex < 4 ? false : true);
-      }
-    }
+    getColor();
 
     if(userId){
-      getColor();
       getInvites(userId);
     }
   }, [userId]);
 
-  const updateColor = async(index) => {
+  const updateColor = (index) => {
     try {
-        const response = await fetch(`/api/user/${userId}`, {
-          method: "PATCH",
-          body: JSON.stringify({
-              ind: index
-            })
-        });
-
-        if(response.ok){
-          console.log("Updated successfully");
-        }
-
+        const colorSave = JSON.stringify({colorIndex: index});
+        localStorage.setItem("saved-theme", colorSave)
     } catch (error) {
         console.log("Error occured" , error);
     }
