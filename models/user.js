@@ -15,10 +15,6 @@ const userSchema = new Schema({
         type: String,
         default: "https://i.imgur.com/p63FHhZ.jpg"
     },
-    colorIndex: {
-        type: Number,
-        default: 5
-    },
     invites: {
         type: [
             {

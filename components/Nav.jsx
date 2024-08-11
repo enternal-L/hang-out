@@ -172,9 +172,9 @@ const Nav = ({setMain, mainColor, setBorder, borderColor, setBlackLogo, blackLog
                         <div className='flex flex-center h-fit w-full'>
                           <div className='flex-col'>
                               {invites.length > 0 && invites.map((item, index) => (
-                                <div className='border-b-4 border-[#90A6EB] flex flex-col gap-2 pb-4' key = {index}>
+                                <div className='border-b-4 border-[#90A6EB] flex flex-col gap-2 py-4' key = {index}>
                                     <div className='flex flex-col'>
-                                      <h1 className='text-base font-semibold'>username</h1>
+                                      <h1 className='text-base font-semibold'>{item.creator.username}</h1>
                                       <p>Invited you to join {item.subject}</p>
                                       <p>{item.description}...</p>
                                     </div>

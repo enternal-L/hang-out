@@ -16,7 +16,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
     return (
         <>
             {share && <Share event = {post} setShare={handleShare}/>}
-            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative z-[1]`}>
+            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px]`}>
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>

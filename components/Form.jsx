@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 //form
-const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor }) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor  }) => {
     return (
       <section className='w-full h-full max-w-full flex-start flex-row pb-7' style={{backgroundColor : borderColor}}>
         <form onSubmit={handleSubmit} className="w-full h-full flex">

@@ -3,13 +3,31 @@ import { useState } from 'react'
 import Form from "@components/Form"
 import Nav from '@components/Nav'
 import { useRouter } from 'next/navigation'
+import { colorArr } from "@components/Nav";
 import { useSession } from 'next-auth/react'
 
 const Creating = () => {
     const router = useRouter();
     const {data: session} = useSession();
-    const [mainColor, setMain] = useState("#90A6EB");
-    const [borderColor, setBorder] = useState("#FFFFFF");
+
+    let _mainColor = "#90A6EB";
+    let _borderColor = "#FFFFFF";
+    let _blackLogo = true;
+
+    if(typeof window !== "undefined"){
+        const savedColor = window.localStorage.getItem("saved-theme");
+        const parsedSavedColor = JSON.parse(savedColor);
+
+        if(parsedSavedColor){
+            _mainColor = colorArr[parsedSavedColor.colorIndex][1];
+            _borderColor = colorArr[parsedSavedColor.colorIndex][0];
+            _blackLogo = parsedSavedColor.colorIndex < 4 ? false : true;
+        }
+    }
+
+    const [mainColor, setMain] = useState(_mainColor);
+    const [borderColor, setBorder] = useState(_borderColor);
+    const [blackLogo, setBlackLogo ] = useState(_blackLogo);
 
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
@@ -28,9 +46,6 @@ const Creating = () => {
         setSubmitting(true);
 
         try{
-
-            console.log(session?.user.id);
-
             const response = await fetch("/api/prompt/new", {
                 method: "POST",
                 body: JSON.stringify({
@@ -60,7 +75,7 @@ const Creating = () => {
 
     return (
         <>
-            <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor}/>
+            <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor} blackLogo={blackLogo} setBlackLogo={setBlackLogo}/>
             <Form
                 type="Publish"
                 post={post}
