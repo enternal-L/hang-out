@@ -1,17 +1,33 @@
 "use client"
 import Feed from "@components/Feed";
 import Nav from "@components/Nav";
+import { colorArr } from "@components/Nav";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 const Home = () => {
-  const [mainColor, setMain] = useState("#90A6EB");
-  const [borderColor, setBorder] = useState("#FFFFFF");
+  const savedColor = localStorage.getItem("saved-theme");
+  const parsedSavedColor = JSON.parse(savedColor);
+
+  let _mainColor = "#90A6EB";
+  let _borderColor = "#FFFFFF";
+  let _blackLogo = true;
+
+  if (parsedSavedColor){
+    _mainColor = colorArr[parsedSavedColor.colorIndex][1];
+    _borderColor = colorArr[parsedSavedColor.colorIndex][0];
+    _blackLogo = parsedSavedColor.colorIndex < 4 ? false : true;
+  }
+
+  const [mainColor, setMain] = useState(_mainColor);
+  const [borderColor, setBorder] = useState(_borderColor);
+  const [blackLogo, setBlackLogo ] = useState(_blackLogo);
+
 
   return (
     <>
-      <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor}/>
+      <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor} setBlackLogo = {setBlackLogo} blackLogo = {blackLogo}/>
       <div className={`w-full h-full flex-col flex-center px-11`} style={{ backgroundColor: borderColor }}>
         <div className={`w-full h-full flex-col rounded_corners flex-center`} style={{ backgroundColor: mainColor }}>
           <Feed />
