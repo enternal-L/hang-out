@@ -56,8 +56,6 @@ const Share = ({event, setShare}) => {
 
         const data = await response.json();
 
-        console.log(data);
-
         setAccess(data.attendees);
     }
 

@@ -1,8 +1,5 @@
-import React from 'react'
 
 const Halfsquare = ({left_color, right_color, selection, setSelected, setButton}) => {
-
-
   return (
     <div className={`color_selector flex-start rotate-[125deg]`} onClick={() => {
         setSelected(selection);

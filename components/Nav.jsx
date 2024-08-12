@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react";
 import Halfsquare from './Halfsquare';
-import Dropdown from './Dropdown';
 
 export const colorArr = [
   ["#000000", "#222831"], ["#B4C3F2", "#FFFFFF"], ["#720455", "#FFFCAA"], ["#FFC95F", "#F1E5CB"], //white logos
@@ -23,7 +22,6 @@ const Nav = ({setMain, mainColor, setBorder, borderColor, setBlackLogo, blackLog
   const [ notifBar, setNotif ] = useState(false);
   const [ menuBar, setMenu ] = useState(false);
   const [ selected, isSelected ] = useState(false);
-
 
   const getColor = () => {
     const savedColor = localStorage.getItem("saved-theme");

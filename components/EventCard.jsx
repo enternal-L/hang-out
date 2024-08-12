@@ -1,24 +1,16 @@
-"use client"
-
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import Share from "./Share";
-import { connectDB } from "@utils/mongodb";
 
 const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown, share, handleShare }) => {
 
-    const router = useRouter();
     const peopleCount = post.attendees.filter(element => element.answer == "yes").length;
 
     return (
         <>
             {share && <Share event = {post} setShare={handleShare}/>}
-            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px]`}>
+            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative`}>
                 {dropDown && (
-                    <div className='flex flex-end shadow-xl absolute z-[2] bg-white right-0'>
+                    <div className='flex flex-end shadow-xl absolute bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
                             <Image src = "/share.svg" alt="share" width = {33} height = {33}
                             className="object-contain cursor-pointer" onClick={handleShare}/>
@@ -51,7 +43,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center z-[3]">
-                            <button className="" onClick={handleDropdown}>...</button>
+                            <Image src="/menu.svg" width={20} height={20} onClick={handleDropdown} className="cursor-pointer"></Image>
                         </div>
                     </div>
                 </div>
