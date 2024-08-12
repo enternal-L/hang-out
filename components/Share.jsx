@@ -72,6 +72,7 @@ const Share = ({event, setShare}) => {
                                     width={13}
                                     height={13}
                                     src = "/cross.svg"
+                                    alt="cancel"
                                     onClick={() => {
                                         setSearch(false);
                                         setQuery("");

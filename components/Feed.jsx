@@ -5,15 +5,19 @@ import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import Image from "next/image";
+import Dropdown from "./Dropdown";
 
 const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
 
     const [toggleStates, setToggles] = useState([]);
     const [shareEvent, setShare] = useState([]);
+    const [filteredData, setFilter] = useState([]);
+    const [dropDown, setDropDown] = useState(false);
 
     useEffect(() => {
         setToggles(Array(data.length).fill(false));
         setShare(Array(data.length).fill(false));
+        setFilter(data);
     }, [data]);
 
     const toggleDropDown = (id) => {
@@ -38,22 +42,34 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
       setShare(copied); 
     }
 
+    const handleSearch = (e) => {
+
+      const regex = new RegExp(e.target.value, 'i');
+
+      if(e.target.value == ""){
+        setFilter(data);
+        return;
+      }
+
+      const searchRes = [...data].filter(item => regex.test(item.subject));
+
+      setFilter(searchRes);
+    }
+
     return (
       <div className="flex flex-col size-full">
-        <div className="m-4 self-end w-full h-10 flex flex-row bg-white">
-          <input placeholder="Invite People" className="border border-r-0 border-black w-full h-10 p-4 rounded-l-sm outline-none"></input>
-          <div className="border border-black border-l-0 flex-center p-4 h-10 outline-none">
-                <Image className="cursor-pointer"
-                    width={13}
-                    height={13}
-                    src = "/cross.svg"
-                    onClick={() => {
-                    }}
-                />
-          </div>
+        <div className="w-full h-10 flex flex-row mt-4 px-4">
+          <input placeholder="Search an event..." className="border border-black w-[20%] h-10 p-4 rounded-lg outline-none bg-white" 
+            onChange={(e) => {handleSearch(e)}}
+            onClick={() => {setDropDown(!dropDown)}}
+            ></input>
+          {dropDown && 
+              <div className="">
+              </div>
+          }
         </div>
         <div className="flex flex-wrap gap-7 size-full justify-center">
-            {toggleStates.length > 0 && data.map((post, index) => (
+            {toggleStates.length > 0 && filteredData.map((post, index) => (
                 <EventCard 
                   index = {index}
                   key = {post._id}
