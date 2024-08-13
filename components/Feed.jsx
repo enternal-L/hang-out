@@ -13,6 +13,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
     const [shareEvent, setShare] = useState([]);
     const [filteredData, setFilter] = useState([]);
     const [dropDown, setDropDown] = useState(false);
+    const [option, setOption] = useState("");
 
     useEffect(() => {
         setToggles(Array(data.length).fill(false));
@@ -42,7 +43,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
       setShare(copied); 
     }
 
-    const handleSearch = (e) => {
+    const handleSearch = (e, mode) => {
 
       const regex = new RegExp(e.target.value, 'i');
 
@@ -51,20 +52,77 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
         return;
       }
 
-      const searchRes = [...data].filter(item => regex.test(item.subject));
+      const searchRes = [...data].filter(item => {
+        if(mode == "has"){
+          return regex.test(item.description);
+        }
+
+        else if(mode == "by"){
+          return regex.test(item.creator.username);
+        }
+
+        else if(mode == "at"){
+          return regex.test(item.location);
+        }
+        
+        else if(mode == "during"){
+          return item.date.split('T')[0] == e.target.value
+        }
+
+        //parseInt(value, 10)
+
+        else if(mode == "before"){
+          return parseInt(item.date.split('T')[0].split('-').join(""), 10) < parseInt(e.target.value.split('-').join(""), 10);
+        }
+
+        else if(mode == "after"){
+          return parseInt(item.date.split('T')[0].split('-').join(""), 10) > parseInt(e.target.value.split('-').join(""), 10);
+        }
+
+        else{
+          return regex.test(item.subject);
+        }
+      });
 
       setFilter(searchRes);
     }
 
     return (
       <div className="flex flex-col size-full">
-        <div className="w-full h-10 flex flex-row mt-4 px-4">
-          <input placeholder="Search an event..." className="border border-black w-[20%] h-10 p-4 rounded-lg outline-none bg-white" 
-            onChange={(e) => {handleSearch(e)}}
-            onClick={() => {setDropDown(!dropDown)}}
-            ></input>
+        <div className="w-full h-10 flex flex-row mt-4 px-4 relative">
+          <div className="flex flex-center flex-row border border-black w-80 min-w-36 h-10 p-2 rounded-lg outline-none bg-white gap-1">
+            {option && 
+              <div className="rounded-sm custom_color text-white px-1">
+                  <p>{option}:</p>
+              </div>
+            }
+            <input placeholder= {option ? "" : `Search an event...`} className="w-full outline-none" 
+              type = {option == "before" || option == "during" || option == "after" ? "date" : "text"}
+              onChange={(e) => {handleSearch(e , option ? option : "title")}}
+              onClick={() => {setDropDown(true)}}
+              ></input>
+          </div>
           {dropDown && 
-              <div className="">
+              <div className="flex w-80 min-w-36 absolute flex-col bg-white top-12 px-5 pt-2 pb-4 rounded-sm z-[2]">
+                <div className="flex flex-row flex-center">
+                  <h1 className="text-sm font-bold w-full">Search Options</h1>
+                  <Image
+                    src="/cross.svg"
+                    width={10}
+                    height={10}
+                    alt="cross"
+                    className="cursor-pointer"
+                    onClick={() => {setDropDown(false); setOption(false)}}
+                  ></Image>
+                </div>
+                <div className="flex flex-col gap-1 mt-2 items-start">
+                    <button className="" onClick={() => setOption("has")}>has: text</button>
+                    <button onClick={() => setOption("by")}>by: user</button>
+                    <button onClick={() => setOption("at")}>at: location</button>
+                    <button onClick={() => setOption("before")}>before: specific date</button>
+                    <button onClick={() => setOption("during")}>during: specific date</button>
+                    <button onClick={() => setOption("after")}>after: specific date</button>
+                </div> 
               </div>
           }
         </div>
