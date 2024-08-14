@@ -102,13 +102,41 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                 </div>
               </div>
 
-              <div className="flex flex-col w-full h-40 gap-1 p-3 px-5 rounded_corners border-4 border-black bg-white flex-center">
-                  <h1 className="text-4xl font-semibold">Event Color</h1>
+              <div className="flex flex-col w-full h-56 p-4 px-5 rounded_corners border-4 border-black bg-white flex-center">
+                  <h1 className="text-xl font-bold">Event Color</h1>
                   <ul className='flex flex-row gap-2 w-full h-full justify-between items-center p-2'>
-                    <li className="w-16 h-16 rounded-full bg-[#FFFFFF] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#FFFFFF"})}></li>
-                    <li className="w-16 h-16 rounded-full bg-[#F1E5CB] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#F1E5CB"})}></li>
-                    <li className="w-16 h-16 rounded-full bg-[#EEF9FF] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#EEF9FF"})}></li>
-                    <li className="w-16 h-16 rounded-full bg-[#222831] border-black border-[3px] cursor-pointer" onClick={() => setPost({...post, color: "#222831"})}></li>
+                    <Image
+                      width={130}
+                      height={130}
+                      alt="mock-white"
+                      src="/white-mock.svg"
+                      className="cursor-pointer"
+                      onClick={() => setPost({...post, color: "#FFFFFF"})}
+                    ></Image>
+                    <Image
+                      width={130}
+                      height={130}
+                      alt="mock-yellow"
+                      src="/yellow-mock.svg"
+                      className="cursor-pointer"
+                      onClick={() => setPost({...post, color: "#F1E5CB"})}
+                    ></Image>
+                    <Image
+                      width={130}
+                      height={130}
+                      alt="mock-blue"
+                      src="/blue-mock.svg"
+                      className="cursor-pointer"
+                      onClick={() => setPost({...post, color: "#134460"})}
+                    ></Image>
+                    <Image
+                      width={130}
+                      height={130}
+                      alt="mock-black"
+                      src="/black-mock.svg"
+                      className="cursor-pointer"
+                      onClick={() => setPost({...post, color: "#222831"})}
+                    ></Image>
                   </ul>
               </div>
 

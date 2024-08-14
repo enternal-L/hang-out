@@ -42,8 +42,8 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                             className="object-contain rounded-full border-black"/>
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
-                        <div className="flex justify-end w-full items-center z-[3]">
-                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={handleDropdown} className="cursor-pointer"></Image>
+                        <div className="flex justify-end w-full items-center">
+                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={handleDropdown} className="cursor-pointer z-[1]"></Image>
                         </div>
                     </div>
                 </div>

@@ -5,10 +5,8 @@ import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import Image from "next/image";
-import Dropdown from "./Dropdown";
 
 const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
-
     const [toggleStates, setToggles] = useState([]);
     const [shareEvent, setShare] = useState([]);
     const [filteredData, setFilter] = useState([]);
@@ -133,7 +131,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
                   key = {post._id}
                   post = {post}
                   color={post.color}
-                  handleTagClick = {handleTagClick}
+                  handleTagClick = {() => {handleTagClick(post)}}
                   handleEdit={() => {handleEdit(post)}}
                   handleDelete={() => {handleDelete(post)}}
                   handleDropdown={() => {toggleDropDown(index)}}
@@ -152,19 +150,19 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
 
+  const fetchPosts = async() => {
+    const response = await fetch('/api/prompt');
+    const data = await response.json();
+
+    const filteredData = data.filter((p) => 
+      p.creator._id === session?.user?.id
+    );
+
+    setPosts(filteredData);
+  }
+
   useEffect(() => {
     if(session?.user?.id){
-      const fetchPosts = async() => {
-        const response = await fetch('/api/prompt');
-        const data = await response.json();
-
-        const filteredData = data.filter((p) => 
-          p.creator._id === session?.user?.id
-        );
-
-        setPosts(filteredData);
-      }
-
       fetchPosts(session.user.id);
     }
   }, [session]);
@@ -194,15 +192,15 @@ const Feed = () => {
       }
   }
 
-  const handleTagClick = () => {
-
+  const handleTagClick = (post) => {
+      router.push(`/Home/${post._id}`)
   }
 
   return (
     <section className="flex size-full">
       <EventCardList
         data={posts}
-        handleTag={() => {}}
+        handleTagClick={handleTagClick}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
