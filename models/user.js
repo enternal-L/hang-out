@@ -23,6 +23,45 @@ const userSchema = new Schema({
             }
         ],
         default: []
+    },
+    drafts : {
+        type: [
+            {
+                subject: {
+                    type: String,
+                    default: ""
+                },
+                description: {
+                    type: String,
+                    default: ""
+                },
+                media: {
+                    type: String,
+                    default: ""
+                },
+                date: {
+                    type: String,
+                    default: ""
+                },
+                start_time: {
+                    type: String,
+                    default: ""
+                },
+                end_time: {
+                    type: String,
+                    default: ""
+                },
+                location: {
+                    type:String,
+                    default: ""
+                },
+                color: {
+                    type:String,
+                    default: "#FFFFFF"
+                },
+            }
+        ],
+        default: []
     }
 
 }, { timestamps: true });
