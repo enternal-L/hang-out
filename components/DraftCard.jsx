@@ -1,18 +1,17 @@
 import Image from "next/image";
 
-const DraftCard = ({ post, color }) => {
+const DraftCard = ({ post, color, handleDelete, handleClick }) => {
     return (
         <>
-            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative`}>
+            <div className={`w-[20%] h-fit my-8 min-w-[250px] relative`} style={{backgroundColor: color}} onClick={() => {handleClick()}}>
                 <div
                     className="object-contain w-full h-44"
-                    style={{
-                        backgroundImage: `/default-media.PNG`, // Set background image from post data: `url(${post.creator.image})`
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                    }}
-                >
+                        style={{
+                            backgroundImage: 'url(/default-media.PNG)', // Set background image from post data: `url(${post.creator.image})`
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                        }}>
                     <div className="flex flex-row pt-2 px-2">
                         <div className="flex items-center gap-1 w-full">
                             <Image
@@ -21,7 +20,10 @@ const DraftCard = ({ post, color }) => {
                             width = {30} 
                             height = {30}
                             className="object-contain rounded-full border-black"/>
-                            <p className="font-semibold text-sm">username</p>
+                            <p className="font-semibold text-sm">{post.username}</p>
+                        </div>
+                        <div className="flex justify-end w-full items-center">
+                            <Image alt="del" src="/trashcan.svg" width={30} height={30} className="cursor-pointer z-[1]" onClick={() => {handleDelete()}}></Image>
                         </div>
                     </div>
                 </div>
@@ -29,12 +31,12 @@ const DraftCard = ({ post, color }) => {
                     <h1 className="text-4xl items-center p-2 font-semibold">{post.subject}</h1>
                     <p className="px-3">{post.description}</p>
                 </div>
-                <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">0 attending</p>
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center"></p>
+                <div className="flex flex-row gap-5 flex-center m-3 h-10">
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center h-full">0 attending</p>
+                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center h-full"></p>
                 </div>
-                <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.location}</p>
+                <div className="flex flex-row gap-5 flex-center m-3 h-10">
+                        <p className="bg-[#FFC95F] rounded-md w-full h-full p-2 flex-center">{post.location}</p>
                 </div>
             </div>
         </>

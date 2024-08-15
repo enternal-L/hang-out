@@ -10,25 +10,29 @@ const Creating = () => {
     const router = useRouter();
     const {data: session} = useSession();
     const userId = session?.user.id;
+    const username = session?.user.name;
 
     let _mainColor = "#90A6EB";
     let _borderColor = "#FFFFFF";
     let _blackLogo = true;
 
-    if(typeof window !== "undefined"){
+    const [mainColor, setMain] = useState(_mainColor);
+    const [borderColor, setBorder] = useState(_borderColor);
+    const [blackLogo, setBlackLogo] = useState(_blackLogo);
+
+    useEffect(() => {
+      if(typeof window !== "undefined"){
         const savedColor = window.localStorage.getItem("saved-theme");
         const parsedSavedColor = JSON.parse(savedColor);
-
+  
         if(parsedSavedColor){
             _mainColor = colorArr[parsedSavedColor.colorIndex][1];
             _borderColor = colorArr[parsedSavedColor.colorIndex][0];
             _blackLogo = parsedSavedColor.colorIndex < 4 ? false : true;
         }
-    }
-
-    const [mainColor, setMain] = useState(_mainColor);
-    const [borderColor, setBorder] = useState(_borderColor);
-    const [blackLogo, setBlackLogo ] = useState(_blackLogo);
+      }
+    })
+    
     const [toggleDraft, setDraft] = useState(false);
     const [drafts, fetchDrafts] = useState([]);
     const [Cancel, setCancel] = useState(false);
@@ -78,6 +82,7 @@ const Creating = () => {
             const response = await fetch(`/api/drafts/${userId}`, {
                 method: "POST",
                 body: JSON.stringify({
+                    username: username,
                     subject: post.subject,
                     media: post.media,
                     description: post.description,
@@ -133,11 +138,11 @@ const Creating = () => {
         }
     };
 
-    const deleteDraft = async() => {
+    const deleteDraft = async(id) => {
         try{
-            const response = await fetch(`/api/drafts/${userId}`, {
+            const response = await fetch(`/api/drafts/${id}`, {
                 method: "DELETE"
-            })
+            });
 
             console.log("successfully deleted");
             
@@ -162,6 +167,7 @@ const Creating = () => {
                 toggleDraft={toggleDraft}
                 setDraft={setDraft}
                 createDraft={CreateDraft}
+                delDraft={deleteDraft}
                 drafts = {drafts}
                 Cancel={Cancel}
                 setCancel={setCancel}

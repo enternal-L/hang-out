@@ -27,6 +27,9 @@ const userSchema = new Schema({
     drafts : {
         type: [
             {
+                username:{
+                    type: String
+                },
                 subject: {
                     type: String,
                     default: ""

@@ -8,11 +8,13 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
       <section className='w-full h-full max-w-full flex-start flex-row pb-7' style={{backgroundColor : borderColor}}>
         <form onSubmit={Cancel ? createDraft : handleSubmit} className="w-full h-full flex">
         <div className="w-full h-full flex-row rounded_corners flex-center mx-11 p-5 gap-7 relative" style={{backgroundColor : mainColor}}>
-          {toggleDraft && <div className="absolute top-0 right-0 size-full rounded-3xl z-[3]" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                <h1 onClick={() => {setDraft(false)}}>close</h1>
-                <div className="flex flex-wrap flex-center w-full h-full">
+          {toggleDraft && <div className="absolute top-0 right-0 size-full rounded-3xl z-[3] flex flex-col" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                <div className="flex flex-end px-5 pt-2">
+                  <h1 onClick={() => {setDraft(false)}} className="text-white text-3xl cursor-pointer">x</h1>
+                </div>
+                <div className="flex flex-wrap justify-center items-start w-full h-full">
                       {drafts.map((item, index) => (
-                        <DraftCard post={item} color={item.color}/>
+                        <DraftCard key={index} post={item} color={item.color} handleDelete={delDraft}/>
                       ))}
                 </div>
           </div>}
@@ -25,12 +27,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
           </div>}
           <div className="w-[60%] h-full bg-[#F1E5CB] rounded_corners flex-center flex-col gap-4 p-8">
             <textarea 
-                  value={post.subject}
-                  onChange={(e) => setPost({...post, subject: e.target.value})}
-                  placeholder='title'
-                  required
-                  className='h-20 p-3 form_field font-semibold text-2xl flex-center'
-                />
+                value={post.subject}
+                onChange={(e) => setPost({...post, subject: e.target.value})}
+                placeholder='title'
+                required
+                className='h-20 p-3 form_field font-semibold text-2xl flex-center'
+            />
             <input 
                 value={post.media}
                 onChange={(e) => setPost({...post, media: e.target.value})}
@@ -38,12 +40,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                 placeholder="add media"
                 className='form_field rounded_corners h-60 p-4 opacity-0;'
                 accept="image/*"
-              />
+            />
             <textarea 
-              value={post.description}
-              onChange={(e) => setPost({...post, description: e.target.value})}
-              placeholder='description'
-              className='form_field p-3 h-64 text-lg'
+                value={post.description}
+                onChange={(e) => setPost({...post, description: e.target.value})}
+                placeholder='description'
+                className='form_field p-3 h-64 text-lg'
             />
           </div>
           <div className="w-[40%] h-full rounded_corners flex flex-col gap-5 p-4 pt-6">
@@ -60,9 +62,10 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                     <Image src = "/quill.svg"
                         width = {65} 
                         height = {65}
-                        className="object-contain bg-white border-4 border-black rounded-full"
+                        className="object-contain bg-white border-4 border-black rounded-full cursor-pointer"
                         onClick={() => {setDraft(true)}}
-                      alt='draft'/>
+                        alt='draft'
+                    />
                   </div>
                   <div className="flex flex-row w-full gap-2 h-16">
                     <Link className="outline_btn h-full text-3xl font-bold cursor-pointer" href="" onClick={() => setCancel(true)}>
