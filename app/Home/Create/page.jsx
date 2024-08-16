@@ -90,7 +90,7 @@ const Creating = () => {
                     date: post.date,
                     start_time: post.start_time,
                     end_time: post.end_time,
-                    color: post.color
+                    color: post.color ? post.color : "#FFFFFF"
                 })
             });
 
@@ -140,17 +140,25 @@ const Creating = () => {
 
     const deleteDraft = async(id) => {
         try{
-            const response = await fetch(`/api/drafts/${id}`, {
+            const response = await fetch(`/api/drafts/${userId}/${id}`, {
                 method: "DELETE"
             });
 
-            console.log("successfully deleted");
+            if(response.ok){
+                console.log("successfully deleted");
             
-            getDrafts();
+                getDrafts();
+            }
         }
         catch(error){
             console.log(error, "error occured")
         }
+    }
+
+    const handleDraftClick = (draft) => {
+        console.log(draft);
+        setPost(draft);
+        console.log(post);
     }
 
     return (
@@ -171,6 +179,7 @@ const Creating = () => {
                 drafts = {drafts}
                 Cancel={Cancel}
                 setCancel={setCancel}
+                handleDraftClick={handleDraftClick}
             />
         </>
     )

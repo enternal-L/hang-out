@@ -3,7 +3,7 @@ import Image from "next/image";
 import DraftCard from "./draftCard";
 
 //form
-const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor, drafts, toggleDraft, setDraft, createDraft, delDraft, Cancel, setCancel}) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor, drafts, toggleDraft, setDraft, createDraft, delDraft, Cancel, setCancel, handleDraftClick}) => {
     return (
       <section className='w-full h-full max-w-full flex-start flex-row pb-7' style={{backgroundColor : borderColor}}>
         <form onSubmit={Cancel ? createDraft : handleSubmit} className="w-full h-full flex">
@@ -14,15 +14,15 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                 </div>
                 <div className="flex flex-wrap justify-center items-start w-full h-full">
                       {drafts.map((item, index) => (
-                        <DraftCard key={index} post={item} color={item.color} handleDelete={delDraft}/>
+                        <DraftCard key={index} draft={item} color={item.color} handleDelete={delDraft} handleClick={handleDraftClick} setDraft={setDraft}/>
                       ))}
                 </div>
           </div>}
 
           {Cancel && <div className="absolute top-0 right-0 size-full rounded-3xl z-[3]" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                 <div className="flex flex-wrap flex-center w-full h-full flex-col gap-2">
-                      <button type = "submit" onClick={() => {createDraft}} className="text-white cursor-pointer">Save as Draft</button>
-                      <Link className="text-white cursor-pointer" href="/Home">Discard</Link>
+                      <button type = "submit" onClick={() => {createDraft}} className="text-white cursor-pointer outline_btn">Save as Draft</button>
+                      <Link className="text-white cursor-pointer outline_btn" href="/Home">Discard</Link>
                 </div>
           </div>}
           <div className="w-[60%] h-full bg-[#F1E5CB] rounded_corners flex-center flex-col gap-4 p-8">
