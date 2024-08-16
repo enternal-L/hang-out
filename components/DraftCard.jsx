@@ -4,6 +4,8 @@ const DraftCard = ({draft, color, handleDelete, handleClick, setDraft }) => {
     return (
         <>
             <div className={`w-[20%] h-fit my-8 min-w-[250px] relative`} style={{backgroundColor: color}}>
+                <div className="top-0 right-0 size-full absolute" onClick={() => {handleClick(draft); setDraft(false)}}>
+                </div>
                 <div
                     className="object-contain w-full h-44"
                     style={{
@@ -12,7 +14,6 @@ const DraftCard = ({draft, color, handleDelete, handleClick, setDraft }) => {
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',  
                     }}
-                    onClick={() => {handleClick(draft); setDraft(false)}}
                     >
                     <div className="flex flex-row pt-2 px-2">
                         <div className="flex items-center gap-1 w-full">
@@ -25,7 +26,7 @@ const DraftCard = ({draft, color, handleDelete, handleClick, setDraft }) => {
                             <p className="font-semibold text-sm">{draft.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center">
-                            <Image alt="del" src="/trashcan.svg" width={30} height={30} className="cursor-pointer z-[1]" onClick={() => {handleDelete(draft._id)}}></Image>
+                            <Image alt="del" src="/trashcan.svg" width={30} height={30} className="cursor-pointer z-[1]" onClick={(e) => {e.stopPropagation(); handleDelete(draft._id)}}></Image>
                         </div>
                     </div>
                 </div>

@@ -139,26 +139,26 @@ const Creating = () => {
     };
 
     const deleteDraft = async(id) => {
-        try{
-            const response = await fetch(`/api/drafts/${userId}/${id}`, {
-                method: "DELETE"
-            });
-
-            if(response.ok){
-                console.log("successfully deleted");
-            
-                getDrafts();
+        if(confirm("Delete this Draft?")){
+            try{
+                const response = await fetch(`/api/drafts/${userId}/${id}`, {
+                    method: "DELETE"
+                });
+    
+                if(response.ok){
+                    console.log("successfully deleted");
+                
+                    getDrafts();
+                }
             }
-        }
-        catch(error){
-            console.log(error, "error occured")
+            catch(error){
+                console.log(error, "error occured")
+            }
         }
     }
 
     const handleDraftClick = (draft) => {
-        console.log(draft);
         setPost(draft);
-        console.log(post);
     }
 
     return (

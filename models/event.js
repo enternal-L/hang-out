@@ -50,7 +50,7 @@ const EventSchema = new Schema({
         } ],
         required: [false, "set attendees"]
     }
-});
+}, { timestamps: true });
 
 const Event = models.Event || model("Event", EventSchema);
 export default Event;

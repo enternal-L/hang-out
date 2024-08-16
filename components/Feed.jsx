@@ -12,6 +12,8 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
     const [filteredData, setFilter] = useState([]);
     const [dropDown, setDropDown] = useState(false);
     const [option, setOption] = useState("");
+    const [sortOption, setSort] = useState("");
+    const [sortDropdown, setSortDrop] = useState(false);
 
     useEffect(() => {
         setToggles(Array(data.length).fill(false));
@@ -87,7 +89,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
 
     return (
       <div className="flex flex-col size-full">
-        <div className="w-full h-10 flex flex-row mt-4 px-4 relative">
+        <div className="w-full h-10 flex flex-row mt-4 px-4 relative gap-2">
           <div className="flex flex-center flex-row border border-black w-80 min-w-36 h-10 p-2 rounded-lg outline-none bg-white gap-1">
             {option && 
               <div className="rounded-sm custom_color text-white px-1">
@@ -100,6 +102,21 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
               onClick={() => {setDropDown(true)}}
               ></input>
           </div>
+          <div className="flex flex-center cursor-pointer relative">
+                <Image
+                  width={33}
+                  height={33}
+                  src="/sort.svg"
+                  alt="sort-menu"
+                  onClick={() => {setSortDrop(!sortDropdown)}}
+                />
+          </div>
+          {sortDropdown && 
+                <div className="flex w-36 h-32 flex-col flex-center bg-white px-5 py-2 rounded-lg relative z-[2] gap-2">
+                  <p className="text-lg">Latest</p>
+                  <p className="text-lg">Earliest</p>
+                  <p className="text-lg">Archived</p>
+                </div>}
           {dropDown && 
               <div className="flex w-80 min-w-36 absolute flex-col bg-white top-12 px-5 pt-2 pb-4 rounded-sm z-[2]">
                 <div className="flex flex-row flex-center">
@@ -133,7 +150,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
                   color={post.color}
                   handleTagClick = {() => {handleTagClick(post)}}
                   handleEdit={() => {handleEdit(post)}}
-                  handleDelete={() => {handleDelete(post)}}
+                  handleDelete={() => {handleDelete}}
                   handleDropdown={() => {toggleDropDown(index)}}
                   dropDown = {toggleStates[index]}
                   share = {shareEvent[index]}
@@ -194,6 +211,20 @@ const Feed = () => {
 
   const handleTagClick = (post) => {
       router.push(`/Home/${post._id}`)
+  }
+
+  const sortBy = (mode) => {
+    if(mode == "latest"){
+      posts.sort()
+    }
+
+    else if(mode == "earliest"){
+
+    }
+
+    else{
+
+    }
   }
 
   return (

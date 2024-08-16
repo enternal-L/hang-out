@@ -8,7 +8,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
     return (
         <>
             {share && <Share event = {post} setShare={handleShare}/>}
-            <div className={`bg-[${color}] w-[30%] h-fit my-8 min-w-[250px] relative`}>
+            <div className={`bg-[${color}] w-[20%] h-fit my-8 min-w-[250px] relative pb-4`} onClick={handleTagClick}>
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
@@ -43,7 +43,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center">
-                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={handleDropdown} className="cursor-pointer z-[1]"></Image>
+                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={(e) => {e.stopPropagation(); handleDropdown(post)}} className="cursor-pointer z-[1]"></Image>
                         </div>
                     </div>
                 </div>
@@ -51,12 +51,15 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                     <h1 className="text-4xl items-center p-2 font-semibold">{post.subject}</h1>
                     <p className="px-3">{post.description}</p>
                 </div>
-                <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{peopleCount} attending</p>
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.date.split('T')[0]}, {post.start_time}-{post.end_time}</p>
+                <div className="flex flex-row gap-3 flex-start m-3">
+                        <p className="bg-[#FFC95F] rounded-md w-[40%] p-2 flex-center">{post.start_time}-{post.end_time}</p>
+                        <p className="bg-[#FFC95F] rounded-md w-[35%] p-2 flex-center">{post.date.split('T')[0]}</p>
                 </div>
-                <div className="flex flex-row gap-5 flex-center m-3">
-                        <p className="bg-[#FFC95F] rounded-md w-full p-2 flex-center">{post.location}</p>
+                <div className="flex flex-row gap-5 flex-start m-3">
+                        <p className="bg-[#FFC95F] rounded-md w-fit min-w-72 p-2 flex-center">{post.location}</p>
+                </div>
+                <div className="flex flex-row gap-5 flex-start m-3">
+                        <p className="bg-[#FFC95F] rounded-md min-w-36 p-2 flex-center">{peopleCount} attending</p>
                 </div>
             </div>
         </>
