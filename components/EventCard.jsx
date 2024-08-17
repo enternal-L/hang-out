@@ -8,7 +8,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
     return (
         <>
             {share && <Share event = {post} setShare={handleShare}/>}
-            <div className={`w-[20%] h-fit my-8 min-w-[250px] relative pb-4`} style={{backgroundColor : color}}> {/* onClick={() => {handleTagClick(post)}} */}
+            <div className={`w-[20%] h-fit my-8 min-w-[250px] relative pb-4`} onClick={() => {handleTagClick(post)}} style={{backgroundColor : color}}> {/* onClick={() => {handleTagClick(post)}} */}
                 {dropDown && (
                     <div className='flex flex-end shadow-xl absolute bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
