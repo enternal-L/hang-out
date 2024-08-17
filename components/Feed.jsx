@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import Image from "next/image";
 
-const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
+const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handleSort }) => {
     const [toggleStates, setToggles] = useState([]);
     const [shareEvent, setShare] = useState([]);
     const [filteredData, setFilter] = useState([]);
@@ -113,9 +113,9 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
           </div>
           {sortDropdown && 
                 <div className="flex w-36 h-32 flex-col flex-center bg-white px-5 py-2 rounded-lg relative z-[2] gap-2">
-                  <p className="text-lg">Latest</p>
-                  <p className="text-lg">Earliest</p>
-                  <p className="text-lg">Archived</p>
+                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("latest"))}>Latest</p>
+                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("earliest"))}>Earliest</p>
+                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("archive"))}>Archived</p>
                 </div>}
           {dropDown && 
               <div className="flex w-80 min-w-36 absolute flex-col bg-white top-12 px-5 pt-2 pb-4 rounded-sm z-[2]">
@@ -149,8 +149,8 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete }) => {
                   post = {post}
                   color={post.color}
                   handleTagClick = {() => {handleTagClick(post)}}
-                  handleEdit={() => {handleEdit(post)}}
-                  handleDelete={() => {handleDelete}}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
                   handleDropdown={() => {toggleDropDown(index)}}
                   dropDown = {toggleStates[index]}
                   share = {shareEvent[index]}
@@ -214,17 +214,38 @@ const Feed = () => {
   }
 
   const sortBy = (mode) => {
-    if(mode == "latest"){
-      posts.sort()
+    if(mode == "earliest"){
+      setPosts([...posts].sort((a, b) => timeTranslation(a.createdAt) - timeTranslation(b.createdAt)));
     }
 
-    else if(mode == "earliest"){
-
+    else if(mode == "latest"){
+      setPosts([...posts].sort((a, b) => timeTranslation(b.createdAt) - timeTranslation(a.createdAt)));
     }
 
     else{
-
+      //archived
     }
+  }
+
+  const timeTranslation = (input) => {
+    //2024-08-17T09:24:23.362Z
+    const temp = input.split("T");
+    const date = temp[0].split("-");
+
+    const year = date[0];
+    const month = date[1];
+    const day = date[2];
+
+    const time = temp[1].split(":");
+
+    const hour = time[0];
+    const minute = time[1];
+    const seconds = time[2].split(".");
+
+    const second = seconds[0];
+    const millisecond = seconds[1].slice(0, -1); //slice the z off
+
+    return new Date(year, month, day, hour, minute, second, millisecond);
   }
 
   return (
@@ -234,6 +255,7 @@ const Feed = () => {
         handleTagClick={handleTagClick}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        handleSort = {sortBy}
       />
     </section>
   )
