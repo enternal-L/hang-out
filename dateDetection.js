@@ -46,6 +46,15 @@ function getCurrentDateStatus(currentTime, currentDate, startTime, startDate, en
     let startTimeArr = startTime.split(":");
     let endTimeArr = endTime.split(":");
 
+    currentTimeArr[0] = parseInt(currentTimeArr[0]);
+    currentTimeArr[1] = parseInt(currentTimeArr[1]);
+
+    startTimeArr[0] = parseInt(startTimeArr[0]);
+    startTimeArr[1] = parseInt(startTimeArr[1]);
+
+    endTimeArr[0] = parseInt(endTimeArr[0]);
+    endTimeArr[1] = parseInt(endTimeArr[1]);
+
     if (currentTimeArr[0] < startTimeArr[0]){
         return 0;
     }
