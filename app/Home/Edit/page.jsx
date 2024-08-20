@@ -39,7 +39,7 @@ const Editing = () => {
         date: '0000-00-00',
         start_time: '00:00',
         end_time: '00:00',
-        color: ''
+        color: '',
     });
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const Editing = () => {
             date: data.date?.split('T')[0],
             start_time: data.start_time,
             end_time: data.end_time,
-            color: data.color
+            color: data.color,
           })
         }
 

@@ -49,6 +49,15 @@ const EventSchema = new Schema({
             }
         } ],
         required: [false, "set attendees"]
+    },
+    status : {
+        type:String,
+        default : "pending"
+
+        // "pending" : event hasn't started
+        // "active" : event is active
+        // "expired" : event has passed
+
     }
 }, { timestamps: true });
 

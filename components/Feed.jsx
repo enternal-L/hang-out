@@ -5,6 +5,7 @@ import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import Image from "next/image";
+import getCurrentDateStatus from "@utils/dateDetection"
 
 const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handleSort }) => {
     const [toggleStates, setToggles] = useState([]);
@@ -172,8 +173,32 @@ const Feed = () => {
     const data = await response.json();
 
     const filteredData = data.filter((p) => 
-      p.creator._id === session?.user?.id
+      p.creator._id === session?.user?.id && p.status !== "expired"
     );
+
+    filteredData.forEach(element => {
+        //init date
+        const start_date = timeTranslation(element.date);
+        const end_date = timeTranslation(element.date);
+
+        //init times
+        const start_time = element.start_time.split(":");
+        const end_time = element.end_time.split(":");
+
+        start_date.setHours(parseInt(start_time[0]));
+        start_date.setMinutes(parseInt(start_time[1]));
+
+        end_date.setHours(parseInt(end_time[0]));
+        end_date.setMinutes(parseInt(end_time[1]));
+
+        const res = getCurrentDateStatus(start_date, end_date);
+
+        if(res > 0){
+          element.status = res == 1 ? "active" : "expired";
+        }
+
+        editStatus(element);
+    })
 
     setPosts(filteredData);
   }
@@ -248,6 +273,28 @@ const Feed = () => {
     return new Date(year, month, day, hour, minute, second, millisecond);
   }
 
+  const editStatus = async(post) => {
+    try{
+        const response = await fetch(`/api/prompt/${post._id}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                subject: post.subject,
+                description: post.description,
+                location: post.location,
+                date: post.date,
+                start_time: post.start_time,
+                end_time: post.end_time,
+                color: post.color,
+                status : post.status
+              })});
+
+        if (response.ok) console.log("Status Updated Successfully");
+
+    }catch(error){
+      console.log("Error: ", error)
+    }
+  }
+
   return (
     <section className="flex size-full">
       <EventCardList
@@ -262,3 +309,6 @@ const Feed = () => {
 }
 
 export default Feed
+
+
+// for the color we could do a dictionary where numbers map to different hexcodes

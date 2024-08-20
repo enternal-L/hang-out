@@ -13,13 +13,13 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                     <div className='flex flex-end shadow-xl absolute bg-white right-0'>
                         <div className='h-64 flex flex-col px-4 flex-center gap-2 pt-7'>
                             <Image src = "/share.svg" alt="share" width = {33} height = {33}
-                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation; handleShare()}}/>
+                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation(); handleShare()}}/>
                             <Image src = "/pen-square.svg" alt="edit" width = {40} height = {40}
-                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation; handleEdit(post)}}/>
+                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation(); handleEdit(post)}}/>
                             <p>Archive</p>
                             <p>Star</p>
                             <Image src = "/trashcan.svg" alt="delete" width = {40} height = {40} 
-                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation; handleDelete(post)}}/>
+                            className="object-contain cursor-pointer" onClick={(e) => {e.stopPropagation(); handleDelete(post)}}/>
                         </div>
                     </div>
                 )}
@@ -43,7 +43,7 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                             <p className="font-semibold text-sm">{post.creator.username}</p>
                         </div>
                         <div className="flex justify-end w-full items-center">
-                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={(e) => {e.stopPropagation(); handleDropdown()}} className="cursor-pointer z-[1]"></Image>
+                            <Image alt="dropdown" src="/menu.svg" width={20} height={20} onClick={(e) => {e.stopPropagation(); handleDropdown()}} className="cursor-pointer z-[0]"></Image>
                         </div>
                     </div>
                 </div>
@@ -60,6 +60,10 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                 </div>
                 <div className="flex flex-row gap-5 flex-start m-3">
                         <p className="bg-[#FFC95F] rounded-md min-w-36 p-2 flex-center">{peopleCount} attending</p>
+                </div>
+                <div className="flex flex-center flex-col">
+                    <div className="rounded-full w-10 h-10" style={{backgroundColor: "green"}}>
+                    </div>
                 </div>
             </div>
         </>

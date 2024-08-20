@@ -2,7 +2,7 @@ import { connectDB } from "@utils/mongodb";
 import Event from "@models/event";
 
 export const POST = async (request) => {
-    const {userId, subject, media, description, location, date, start_time, end_time, color} = await request.json();
+    const {userId, subject, media, description, location, date, start_time, end_time, color, status} = await request.json();
 
     try{
         await connectDB();
@@ -15,7 +15,8 @@ export const POST = async (request) => {
             date,
             start_time,
             end_time,
-            color
+            color,
+            status
         });
 
         await newEvent.save();

@@ -90,7 +90,7 @@ const Creating = () => {
                     date: post.date,
                     start_time: post.start_time,
                     end_time: post.end_time,
-                    color: post.color ? post.color : "#FFFFFF"
+                    color: post.color ? post.color : "#FFFFFF",
                 })
             });
 
@@ -122,7 +122,8 @@ const Creating = () => {
                     date: post.date,
                     start_time: post.start_time,
                     end_time: post.end_time,
-                    color: post.color
+                    color: post.color,
+                    status: post.status
                 })
             });
 

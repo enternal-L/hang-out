@@ -59,7 +59,7 @@ const EventPage = ( { params } ) => {
                                     <p className="font-semibold text-sm">username</p>
                                 </div>
                                 <div className="flex justify-end w-full items-center">
-                                    <Image alt="dropdown" src="/menu.svg" width={20} height={20}className="cursor-pointer z-[1]"></Image>
+                                    <Image alt="dropdown" src="/menu.svg" width={20} height={20} className="cursor-pointer z-0"></Image>
                                 </div>
                         </div>
                     </div>

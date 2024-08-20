@@ -117,7 +117,7 @@ const Nav = ({setMain, mainColor, setBorder, borderColor, setBlackLogo, blackLog
       </Link>
 
       <div className='flex gap-2 flex-center relative'>
-        <Link href="/Home" className='z-[3] pt-8'>
+        <Link href="" className='z-[3] pt-8'>
               <div className='border-black border-[5px] size-[67px] rounded-full' 
                 style = {{backgroundColor : notifBar ? 'black' : 'white'}}
                 onClick={() => {
