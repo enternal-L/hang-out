@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import Image from "next/image";
 import getCurrentDateStatus from "@utils/dateDetection"
 
-const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handleSort }) => {
+const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handleSort, mainColor }) => {
     const [toggleStates, setToggles] = useState([]);
     const [shareEvent, setShare] = useState([]);
     const [filteredData, setFilter] = useState([]);
@@ -15,6 +15,9 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
     const [option, setOption] = useState("");
     const [sortOption, setSort] = useState("");
     const [sortDropdown, setSortDrop] = useState(false);
+
+    //event status to color hashmap
+    const colorMap = new Map([["pending", "#FFB800"], ["active", "#00FF29"], ["expired", "#FF3939"]]);
 
     useEffect(() => {
         setToggles(Array(data.length).fill(false));
@@ -156,6 +159,8 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
                   dropDown = {toggleStates[index]}
                   share = {shareEvent[index]}
                   handleShare={() => {toggleShare(index)}}
+                  colorMap = {colorMap}
+                  mainColor = {mainColor}
                 />
             ))}
         </div>
@@ -163,7 +168,7 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
     );
 };
 
-const Feed = () => {
+const Feed = ({mainColor}) => {
   const router = useRouter();
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
@@ -173,8 +178,10 @@ const Feed = () => {
     const data = await response.json();
 
     const filteredData = data.filter((p) => 
-      p.creator._id === session?.user?.id && p.status !== "expired"
+      p.creator._id === session?.user?.id
     );
+
+    // && p.status !== "expired"
 
     filteredData.forEach(element => {
         //init date
@@ -274,6 +281,7 @@ const Feed = () => {
   }
 
   const editStatus = async(post) => {
+
     try{
         const response = await fetch(`/api/prompt/${post._id}`, {
             method: "PATCH",
@@ -303,6 +311,7 @@ const Feed = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
         handleSort = {sortBy}
+        mainColor = {mainColor}
       />
     </section>
   )

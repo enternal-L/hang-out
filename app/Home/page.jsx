@@ -33,7 +33,7 @@ const Home = () => {
       <Nav setMain = {setMain} mainColor = {mainColor} setBorder={setBorder} borderColor = {borderColor} setBlackLogo = {setBlackLogo} blackLogo = {blackLogo}/>
       <div className={`w-full min-h-full h-auto flex-col flex-center px-11`} style={{ backgroundColor: borderColor }}>
         <div className={`w-full h-full flex-col rounded_corners flex-center`} style={{ backgroundColor: mainColor }}>
-          <Feed />
+          <Feed mainColor = {mainColor}/>
           <Link href = "/Home/Create" className="flex flex-center w-[65px] h-[65px] right-20 bottom-4 fixed rounded-full bg-white text-6xl font-bold">+</Link>
         </div>
       </div>

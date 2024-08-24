@@ -1,4 +1,4 @@
-function getCurrentDateStatus(startDate, endDate){
+export default function getCurrentDateStatus(startDate, endDate){
     /// Return type: int
     /// -2 : Wrong data type for date
     /// -1 : Wrong data type for time
@@ -23,10 +23,11 @@ function getCurrentDateStatus(startDate, endDate){
     }
 
     // check for month
-    if (currentDate.getMonth() < startDate.getMonth()){
+    if (currentDate.getMonth() + 1 < startDate.getMonth()){
+        console.log(currentDate.getMonth(), " ", startDate.getMonth())
         return 0;
     }
-    if (currentDate.getMonth() > endDate.getMonth()){
+    if (currentDate.getMonth() + 1 > endDate.getMonth()){
         return 2;
     }
 

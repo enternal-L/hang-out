@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Share from "./Share";
 
-const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown, share, handleShare }) => {
+const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelete, handleDropdown, dropDown, share, handleShare , colorMap, mainColor}) => {
+
 
     const peopleCount = post.attendees.filter(element => element.answer == "yes").length;
 
@@ -61,10 +62,16 @@ const EventCard = ({ index, post, color, handleTagClick, handleEdit, handleDelet
                 <div className="flex flex-row gap-5 flex-start m-3">
                         <p className="bg-[#FFC95F] rounded-md min-w-36 p-2 flex-center">{peopleCount} attending</p>
                 </div>
-                <div className="flex flex-center flex-col">
-                    <div className="rounded-full w-10 h-10" style={{backgroundColor: "green"}}>
+                <div className="flex flex-center flex-col absolute right-0 bottom-0 rounded-full w-10 h-10 translate-x-3 translate-y-3 p-2" style={{backgroundColor: mainColor}}>
+                    <div className="rounded-full w-full h-full" style={{backgroundColor: colorMap.get(post.status)}}>
                     </div>
                 </div>
+
+                {/* 
+                    "pending" : #FFB800
+                    "active" : #00FF29
+                    "expired" : #FF3939
+                */}
             </div>
         </>
     )
