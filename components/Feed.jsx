@@ -116,9 +116,9 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
           </div>
           {sortDropdown && 
                 <div className="flex w-36 h-32 flex-col flex-center bg-white px-5 py-2 rounded-lg relative z-[2] gap-2">
-                  {/* <p className="text-lg cursor-pointer" onClick={() => (handleSort("latest"))}>Latest</p>
+                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("latest"))}>Latest</p>
                   <p className="text-lg cursor-pointer" onClick={() => (handleSort("earliest"))}>Earliest</p>
-                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("archive"))}>Archived</p> */}
+                  <p className="text-lg cursor-pointer" onClick={() => (handleSort("archive"))}>Archived</p>
                 </div>}
           {dropDown && 
               <div className="flex w-80 min-w-36 absolute flex-col bg-white top-12 px-5 pt-2 pb-4 rounded-sm z-[2]">
@@ -173,6 +173,8 @@ const Feed = ({mainColor}) => {
   const [filteredPosts, setFiltered] = useState([]);
   const { data: session } = useSession();
 
+  const now = new Date();
+
   const [earliest, setEarliest] = useState(false);
   const [latest, setLatest] = useState(false);
   const [archive, setArchive] = useState(false);
@@ -211,9 +213,11 @@ const Feed = ({mainColor}) => {
     })//for every load of an event, update its status 
     setPosts(filteredData);
 
-    setFiltered(filteredData.filter((p) => 
+    const defData = filteredData.filter((p) => 
       p.status !== "expired"
-    ));//populates filtered with unexpired events, so we don't just sort either nothing, or expired events
+    )
+
+    setFiltered(defData.sort((a, b) => (defaultDate(a.date, a.start_time) - now) - (defaultDate(b.date, b.start_time) - now)));
   }
 
   useEffect(() => {
@@ -252,12 +256,8 @@ const Feed = ({mainColor}) => {
   }
 
   const sortBy = (mode) => {
-    setFiltered(posts.filter((p) => 
-      p.status !== "expired"
-    ));//populates filtered with unexpired events, so we don't just sort either nothing, or expired events
-
     if(mode == "earliest"){
-      setFiltered([...posts].sort((a, b) => timeTranslation(a.createdAt) - timeTranslation(b.createdAt)));
+      setFiltered([...filteredPosts].sort((a, b) => timeTranslation(a.createdAt) - timeTranslation(b.createdAt)));
       
       setEarliest(!earliest);
       setLatest(false);
@@ -265,14 +265,17 @@ const Feed = ({mainColor}) => {
     }// if earliest is selected, sort by earliest creation time
 
     else if(mode == "latest"){
-      setFiltered([...posts].sort((a, b) => timeTranslation(b.createdAt) - timeTranslation(a.createdAt)));
+      setFiltered([...filteredPosts].sort((a, b) => timeTranslation(b.createdAt) - timeTranslation(a.createdAt)));
 
       setLatest(!latest);
       setArchive(false);
       setEarliest(false);
     }// if latest is selected, sort by latest creation time
 
-    else if(mode == "expired"){
+    else if(mode == "archive"){
+
+      console.log("posts");
+
       setFiltered(posts.filter((p) => 
         p.status == "expired"
       ));
@@ -282,13 +285,11 @@ const Feed = ({mainColor}) => {
       setEarliest(false);
     }// if archived is selected, filter by expired events
 
-    else{
-      if(!archive && !latest && !earliest){
-        const now = new Date();
-        setFiltered([...posts].sort((a, b) => (defaultDate(a.date, a.start_time) - now) - (defaultDate(b.date, b.start_time) - now)));
-        //time from current time calculator
-      }// if none is chosen, sort by time between now and start time
-    }
+    if(!archive && !latest && !earliest){
+      const unexpired = posts.filter((item) => item.status != "expired");
+      setFiltered(unexpired.sort((a, b) => (defaultDate(a.date, a.start_time) - now) - (defaultDate(b.date, b.start_time) - now)));
+      //time from current time calculator
+    }// if none is chosen, sort by time between now and start time
   }
 
   const defaultDate = (date, time) => {
