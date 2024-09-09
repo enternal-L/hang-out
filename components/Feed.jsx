@@ -273,14 +273,11 @@ const Feed = ({mainColor}) => {
     }// if latest is selected, sort by latest creation time
 
     else if(mode == "archive"){
-
-      console.log("posts");
-
       setFiltered(posts.filter((p) => 
         p.status == "expired"
       ));
 
-      setArchive(!archive);
+      setArchive(archive => !archive);
       setLatest(false);
       setEarliest(false);
     }// if archived is selected, filter by expired events
