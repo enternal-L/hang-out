@@ -13,7 +13,6 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
     const [filteredData, setFilter] = useState([]);
     const [dropDown, setDropDown] = useState(false);
     const [option, setOption] = useState("");
-    const [sortOption, setSort] = useState("");
     const [sortDropdown, setSortDrop] = useState(false);
 
     //event status to color hashmap
@@ -171,7 +170,12 @@ const EventCardList = ({ data , handleTagClick, handleEdit, handleDelete, handle
 const Feed = ({mainColor}) => {
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFiltered] = useState([]);
   const { data: session } = useSession();
+
+  const [earliest, setEarliest] = useState(false);
+  const [latest, setLatest] = useState(false);
+  const [archive, setArchive] = useState(false);
 
   const fetchPosts = async() => {
     const response = await fetch('/api/prompt');
@@ -180,7 +184,6 @@ const Feed = ({mainColor}) => {
     const filteredData = data.filter((p) => 
       p.creator._id === session?.user?.id
     );
-
     // && p.status !== "expired"
 
     filteredData.forEach(element => {
@@ -205,14 +208,14 @@ const Feed = ({mainColor}) => {
         }
 
         editStatus(element);
-    })
-
+    })//for every load of an event, update its status
     setPosts(filteredData);
   }
 
   useEffect(() => {
     if(session?.user?.id){
-      fetchPosts(session.user.id);
+      fetchPosts();
+      sortBy("");
     }
   }, [session]);
 
@@ -247,16 +250,48 @@ const Feed = ({mainColor}) => {
 
   const sortBy = (mode) => {
     if(mode == "earliest"){
-      setPosts([...posts].sort((a, b) => timeTranslation(a.createdAt) - timeTranslation(b.createdAt)));
-    }
+      setFiltered([...posts].sort((a, b) => timeTranslation(a.createdAt) - timeTranslation(b.createdAt)));
+      setFiltered(filteredPosts.filter((p) => p.status != "expired"))
+      
+      setEarliest(!earliest);
+      setLatest(false);
+      setArchive(false);
+    }// if earliest is selected
 
     else if(mode == "latest"){
-      setPosts([...posts].sort((a, b) => timeTranslation(b.createdAt) - timeTranslation(a.createdAt)));
-    }
+      setFiltered([...posts].sort((a, b) => timeTranslation(b.createdAt) - timeTranslation(a.createdAt)));
+      setFiltered(filteredPosts.filter((p) => p.status != "expired"))
+
+      setLatest(!latest);
+      setArchive(false);
+      setEarliest(false);
+    }// if latest is selected
+
+    else if(mode == "expired"){
+      setFiltered(posts.filter((p) => 
+        p.status == "expired"
+      ));
+
+      setArchive(!archive);
+      setLatest(false);
+      setEarliest(false);
+    }// if archived is selected
 
     else{
-      //archived
+      if(!archive && !latest && !earliest){
+        const now = new Date();
+        setFiltered([...posts].sort((a, b) => (defaultDate(a.date, a.start_time) - now) - (defaultDate(b.date, b.start_time) - now)));
+        //time from current time calculator
+      }// if none is chosen and it is default
     }
+  }
+
+  const defaultDate = (date, time) => {
+    const dateArr = date.split("T")[0];
+    const curDate = dateArr.split("-");
+    const timeArr = time.split(":");
+
+    return new Date(curDate[0], curDate[1], curDate[2], timeArr[0], timeArr[1], 0, 0);
   }
 
   const timeTranslation = (input) => {
@@ -306,7 +341,7 @@ const Feed = ({mainColor}) => {
   return (
     <section className="flex size-full">
       <EventCardList
-        data={posts}
+        data={filteredPosts}
         handleTagClick={handleTagClick}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
