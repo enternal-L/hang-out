@@ -277,7 +277,7 @@ const Feed = ({mainColor}) => {
         p.status == "expired"
       ));
 
-      setArchive(archive => !archive);
+      setArchive(!archive);
       setLatest(false);
       setEarliest(false);
     }// if archived is selected, filter by expired events

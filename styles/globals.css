@@ -195,3 +195,9 @@ input {
     -1px 0 0 white,
     0 -1px 0 white;
 }
+
+.change-month{
+  cursor: pointer;
+  font-size: 30px;
+  padding: 2px;
+}

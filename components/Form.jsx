@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import DraftCard from "./draftCard";
+import Calendar from "./Calendar";
 
 //form
 const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, borderColor, drafts, toggleDraft, setDraft, createDraft, delDraft, Cancel, setCancel, handleDraftClick}) => {
@@ -89,9 +90,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                     ></input>
                 </div>
 
-                <div className="flex flex-col w-full h-32 gap-3 p-2 border-4 border-black rounded-xl">
-                      <p className="font-bold text-xl text-center">Select date and time</p>
-                      <div className="flex gap-2 flex-row h-full pb-2">
+                <div className="flex flex-col flex-center w-full h-96 gap-3 p-2">
+                      {/* <p className="font-bold text-xl text-center">Select date and time</p> */}
+                      {/* <div className="flex gap-2 flex-row h-full pb-2">
                         <input className="w-full bbb"
                           placeholder="select date"
                           type="date"
@@ -118,11 +119,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
                           >
                           </input>
                         </div>
-                      </div>
+                      </div> */}
+                      <Calendar></Calendar>
                 </div>
               </div>
 
-              <div className="flex flex-col w-full h-56 p-4 px-5 rounded_corners border-4 border-black bg-white flex-center">
+              <div className="flex flex-col w-full h-48 p-4 px-5 rounded_corners border-4 border-black bg-white flex-center">
                   <h1 className="text-xl font-bold">Event Color</h1>
                   <ul className='flex flex-row gap-2 w-full h-full justify-between items-center p-2'>
                     <Image
