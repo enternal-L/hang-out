@@ -126,7 +126,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit, mainColor, border
 
               <div className="flex flex-col w-full h-48 p-4 px-5 rounded_corners border-4 border-black bg-white flex-center">
                   <h1 className="text-xl font-bold">Event Color</h1>
-                  <ul className='flex flex-row gap-2 w-full h-full justify-between items-center p-2'>
+                  <ul className='flex flex-row gap-2 w-fit  h-full justify-between items-center p-2'>
                     <Image
                       width={130}
                       height={130}
